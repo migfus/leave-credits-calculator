@@ -1,12 +1,14 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit",
-    "source.sortMembers": "explicit"
-},
-"workbench.colorCustomizations": {
-    "activityBar.background": "#521441",
-    "titleBar.activeBackground": "#731D5B",
-    "titleBar.activeForeground": "#FDF8FC"
-}
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "explicit",
+		"source.organizeImports": "explicit",
+		"source.sortMembers": "explicit"
+	},
+	"workbench.colorCustomizations": {
+		"activityBar.background": "#521441",
+		"titleBar.activeBackground": "#731D5B",
+		"titleBar.activeForeground": "#FDF8FC"
+	},
+	"editor.wordWrap": "wordWrapColumn",
+	"editor.wordWrapColumn": 160
 }

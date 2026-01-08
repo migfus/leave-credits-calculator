@@ -6,6 +6,16 @@ module.exports = {
 	theme: {
 		extend: {
 			colors: {
+				dark: {
+					100: "0f0f0f",
+					200: "272727",
+					300: "3f3f3f"
+				},
+				light: {
+					100: "ffffff",
+					200: "f2f2f2",
+					300: "e6e6e6"
+				},
 				brand: {
 					50: "#f3faf7",
 					100: "#d8efe8",
@@ -18,16 +28,6 @@ module.exports = {
 					800: "#244b46",
 					900: "#21403b",
 					950: "#0f2422"
-				},
-				dark: {
-					100: "0f0f0f",
-					200: "272727",
-					300: "3f3f3f"
-				},
-				light: {
-					100: "ffffff",
-					200: "f2f2f2",
-					300: "e6e6e6"
 				}
 			}
 		}
