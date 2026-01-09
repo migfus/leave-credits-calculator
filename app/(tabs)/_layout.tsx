@@ -20,7 +20,7 @@ const Layout = () => {
 
 	return (
 		<SafeAreaView
-			className={`${theme ? "bg-neutral-900" : "bg-neutral-50"} h-full `}
+			className={`${theme ? "bg-neutral-900" : "bg-neutral-100"} h-full `}
 		>
 			<Tab.Navigator
 				screenOptions={{
@@ -30,7 +30,7 @@ const Layout = () => {
 						color: theme ? "#fafafa" : "#0a0a0a"
 					},
 					tabBarStyle: {
-						backgroundColor: theme ? "#171717" : "#fafafa"
+						backgroundColor: theme ? "#171717" : "#f5f5f5"
 					}
 				}}
 			>

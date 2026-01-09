@@ -24,7 +24,7 @@ const HistoryCard = ({
 		<View className="flex flex-1">
 			<TouchableOpacity
 				onPress={onPress}
-				className={`${theme ? "bg-neutral-900 " : "bg-neutral-50 "} px-4 pt-4 flex justify-between flex-row p-4 rounded-2xl`}
+				className={`${theme ? "bg-neutral-900" : "bg-neutral-100"} px-4 pt-4 flex justify-between flex-row p-4 rounded-2xl`}
 			>
 				<Text className={`${theme ? "text-neutral-100" : "text-neutral-600"}`}>
 					Clear History
@@ -41,7 +41,7 @@ const HistoryCard = ({
 					contentContainerStyle={{ gap: 8 }}
 					renderItem={({ item }) => (
 						<View
-							className={`${theme ? "bg-neutral-900" : "bg-neutral-50 "} flex flex-row justify-end p-4 rounded-2xl`}
+							className={`${theme ? "bg-neutral-900" : "bg-neutral-100"} flex flex-row justify-end p-4 rounded-2xl`}
 						>
 							<View className="flex flex-row items-center">
 								<Text
@@ -112,7 +112,9 @@ export default function Index() {
 	}
 
 	return (
-		<ScrollView className="flex-1 gap-4 p-4">
+		<ScrollView
+			className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} flex-1 gap-4 p-4`}
+		>
 			<HistoryCard
 				history={history}
 				onPress={() => resetHistory()}

@@ -86,14 +86,23 @@ const HistoryCard = ({
 	)
 }
 
-const ResultCard = (result: {
+const ResultCard = ({
+	balance,
+	hours,
+	minutes,
+	theme = false
+}: {
 	balance: string
 	hours: string
 	minutes: string
+	theme?: boolean
 }) => {
+	const result = { balance, hours, minutes }
 	return (
 		<View className=" rounded-2xl flex flex-col justify-between p-2 flex-none">
-			<Text className="text-neutral-600">Result</Text>
+			<Text className={`${theme ? "text-neutral-50" : "text-neutral-600"}`}>
+				Result
+			</Text>
 			<View className="flex flex-row justify-end items-end">
 				{leaveBalanceComputation(result)[0] ? (
 					<Text
@@ -108,13 +117,13 @@ const ResultCard = (result: {
 
 				<Text
 					numberOfLines={1}
-					className="text-right text-neutral-700 text-4xl font-bold "
+					className={`${theme ? "text-neutral-50" : "text-neutral-700"} text-right text-4xl font-bold`}
 				>
 					{`${leaveBalanceComputation(result)[1]} `}
 				</Text>
 				<Text
 					numberOfLines={1}
-					className="text-right text-neutral-700 text-md "
+					className={`${theme ? "text-neutral-50" : "text-neutral-700"} text-right text-md`}
 				>
 					bal
 				</Text>
@@ -152,11 +161,11 @@ const InputCard = ({
 			<TextInput
 				value={value}
 				onChangeText={setValue}
-				className={`${selected && theme ? "border-2 border-neutral-300 bg-neutral-950 text-brand-50" : selected ? "border-2 border-neutral-300 bg-white" : theme ? "bg-neutral-900 text-neutral-100" : "bg-neutral-50"} rounded-2xl h-16 text-right text-2xl font-semibold px-4 `}
+				className={`${selected && theme ? "border border-neutral-300 bg-neutral-900 text-brand-50" : selected ? "border border-neutral-300 bg-white" : theme ? "bg-neutral-800 text-neutral-100" : "bg-neutral-100 text-neutral-900"} rounded-2xl h-16 text-right text-2xl font-semibold px-4`}
 				showSoftInputOnFocus={false}
 				keyboardType="numeric"
 				selection={{ start: value.length, end: value.length }}
-				onSelectionChange={({ nativeEvent }) => {
+				onSelectionChange={() => {
 					onPressIn()
 				}}
 			/>
@@ -273,10 +282,15 @@ export default function Index() {
 
 	return (
 		<View
-			className={`${theme ? "bg-neutral-950" : "bg-neutral-50"} flex flex-col justify-between h-full gap-4 p-4`}
+			className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} flex flex-col justify-between h-full gap-4 p-4`}
 		>
 			<HistoryCard history={history} theme={theme} />
-			<ResultCard balance={balance} hours={hours} minutes={minutes} />
+			<ResultCard
+				balance={balance}
+				hours={hours}
+				minutes={minutes}
+				theme={theme}
+			/>
 			<InputCard
 				title="Balance"
 				value={balance}
@@ -336,10 +350,10 @@ export default function Index() {
 									key={bi}
 									onPressIn={onPress}
 									activeOpacity={0.7}
-									className={`${theme ? "bg-neutral-950" : "bg-white"} rounded-2xl justify-center items-center flex-1 h-[5rem] mx-1`}
+									className={`${theme ? "bg-neutral-800" : "bg-white"} rounded-2xl justify-center items-center flex-1 h-[5rem] mx-1`}
 								>
 									<Text
-										className={`${theme ? "text-neutral-50" : "text-neutral-950"} font-semibold text-2xl`}
+										className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl`}
 									>
 										{b}
 									</Text>
