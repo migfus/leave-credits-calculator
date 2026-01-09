@@ -1,4 +1,5 @@
 // TODO: FIX SOME FUTURE SHITS
+import moment from "moment"
 
 export function leaveBalanceComputation(data: {
 	balance: string
@@ -9,9 +10,6 @@ export function leaveBalanceComputation(data: {
 	const computed_hours = leaveEquivalentFromCSV(Number(data.hours) * 60)
 	const computed_mins = leaveEquivalentFromCSV(Number(data.minutes))
 	const cost = computed_hours + computed_mins
-
-	console.log("computed_hours", computed_hours)
-	console.log("computed_min", computed_mins)
 
 	return [cost, roundUp(Number(data.balance) - cost)]
 	// return Number(data.balance) + Number(data.hours) + Number(data.minutes)
@@ -51,4 +49,26 @@ function leaveEquivalentFromCSV(minutes: number) {
 
 	// Step 5: scale back
 	return rounded / 1000
+}
+
+export function messengerStyleTime(timestamp: string) {
+	const now = moment()
+	const date = moment(timestamp)
+
+	if (now.isSame(date, "day")) {
+		// Today: show time like 3:15 PM
+		return date.format("h:mm A")
+	} else if (now.subtract(1, "day").isSame(date, "day")) {
+		// Yesterday: show "Yesterday"
+		return "Ytd"
+	} else if (now.isSame(date, "week")) {
+		// Same week: show weekday name like "Monday"
+		return date.format("ddd")
+	} else if (now.isSame(date, "year")) {
+		// Same year: show like "Feb 20"
+		return date.format("MMM D")
+	} else {
+		// Older: show like "2 years ago"
+		return date.fromNow()
+	}
 }

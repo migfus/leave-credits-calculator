@@ -1,8 +1,7 @@
 export interface IconProps {
 	width?: number
 	height?: number
-	color?: string
-	outline?: boolean
+	theme: boolean
 }
 
 export interface TabIconProps {

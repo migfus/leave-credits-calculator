@@ -1,7 +1,9 @@
 import { LeaveBalanceHistory } from "@/globalInterface"
+import BackIcon from "@/icons/backIcon"
+import HistoryIcon from "@/icons/historyIcon"
 import { useLeaveHistory } from "@/store/historyStore"
 import { useThemeStore } from "@/store/themeStore"
-import { leaveBalanceComputation } from "@/utils"
+import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import * as Haptics from "expo-haptics"
 import React, { useState } from "react"
 import { FlatList, Text, TextInput, TouchableOpacity, View } from "react-native"
@@ -18,10 +20,18 @@ const HistoryCard = ({
 			className={`${theme ? "bg-neutral-900" : "bg-neutral-50"} rounded-2xl flex flex-1`}
 		>
 			<View className="px-4 pt-4 rounded-2xl flex justify-between flex-row">
-				<Text className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}>
-					History
-				</Text>
-				<Text className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}>
+				<View className="flex flex-row gap-2 items-center">
+					<HistoryIcon theme={theme} width={16} height={16} />
+					<Text
+						className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
+					>
+						History
+					</Text>
+				</View>
+
+				<Text
+					className={`${theme ? "text-neutral-200" : "text-neutral-600"} text-sm`}
+				>
 					{history.length}
 				</Text>
 			</View>
@@ -30,53 +40,61 @@ const HistoryCard = ({
 					data={history}
 					keyExtractor={(item) => item.timeStamps}
 					renderItem={({ item }) => (
-						<View className="flex flex-row justify-end ">
-							<View className="flex flex-row items-end">
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
-								>{`${item.balance} `}</Text>
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"} text-xs`}
-								>
-									{`bal `}
-								</Text>
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
-								>
-									{`- `}
-								</Text>
+						<View className="flex flex-row justify-between">
+							<Text
+								className={`${theme ? "text-neutral-500" : "text-neutral-600"} text-xs`}
+							>
+								{messengerStyleTime(item.timeStamps)}
+							</Text>
+							<View className="flex flex-row justify-end ">
+								<View className="flex flex-row items-end">
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
+									>{`${item.balance} `}</Text>
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"} text-xs`}
+									>
+										{`bal `}
+									</Text>
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
+									>
+										{`- `}
+									</Text>
 
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
-								>{`${item.hours} `}</Text>
-								<Text numberOfLines={1} className="text-neutral-400 text-xs">
-									{`hr `}
-								</Text>
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
-								>{`${item.minutes} `}</Text>
-								<Text numberOfLines={1} className="text-neutral-400 text-xs">
-									{`min `}
-								</Text>
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
+									>{`${item.hours} `}</Text>
+									<Text numberOfLines={1} className="text-neutral-300 text-xs">
+										{`hr `}
+									</Text>
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
+									>{`${item.minutes} `}</Text>
 
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"}`}
-								>
-									{`= `}
-								</Text>
-							</View>
+									<Text numberOfLines={1} className="text-neutral-300 text-xs">
+										{`min `}
+									</Text>
 
-							<View className="flex flex-row w-16">
-								<Text
-									numberOfLines={1}
-									className={`${theme ? "text-neutral-200" : "text-neutral-600"} font-semibold text-right`}
-								>{`${leaveBalanceComputation(item)[1]} `}</Text>
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-300" : "text-neutral-600"}`}
+									>
+										{`= `}
+									</Text>
+								</View>
+
+								<View className="flex flex-row w-18 justify-end">
+									<Text
+										numberOfLines={1}
+										className={`${theme ? "text-neutral-200" : "text-neutral-600"} font-semibold text-right`}
+									>{`${leaveBalanceComputation(item)[1]} `}</Text>
+								</View>
 							</View>
 						</View>
 					)}
@@ -178,10 +196,6 @@ export default function Index() {
 	const [hours, setHours] = useState<string>("0")
 	const [minutes, setMinutes] = useState<string>("0")
 	const [select, setSelect] = useState<string>("balance")
-
-	const [balanceError, setBalanceError] = useState<boolean>(false)
-	const [hoursError, setHoursError] = useState<boolean>(false)
-	const [minutesError, setMinutesError] = useState<boolean>(false)
 
 	const history = useLeaveHistory((s) => s.history)
 	const addHistory = useLeaveHistory((s) => s.addHistory)
@@ -335,10 +349,6 @@ export default function Index() {
 					<View key={ri} className="flex-row justify-between mb-3">
 						{row.map((b, bi) => {
 							const onPress = () => {
-								setBalanceError(false)
-								setHoursError(false)
-								setMinutesError(false)
-
 								if (b === "Reset All") reset()
 								else if (b === "Del") del()
 								else if (b === "Clear") clear()
@@ -352,11 +362,15 @@ export default function Index() {
 									activeOpacity={0.7}
 									className={`${theme ? "bg-neutral-800" : "bg-white"} rounded-2xl justify-center items-center flex-1 h-[5rem] mx-1`}
 								>
-									<Text
-										className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl`}
-									>
-										{b}
-									</Text>
+									{b === "Del" ? (
+										<BackIcon theme={theme} />
+									) : (
+										<Text
+											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl`}
+										>
+											{b}
+										</Text>
+									)}
 								</TouchableOpacity>
 							)
 						})}
