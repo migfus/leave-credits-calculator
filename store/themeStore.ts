@@ -10,13 +10,19 @@ interface ThemeStore {
 export const useThemeStore = create<ThemeStore>()(
 	persist(
 		(set, get) => ({
-			theme: false,
-
+			theme: true,
 			toggleTheme: () => set({ theme: !get().theme })
 		}),
 		{
-			name: "theme-store",
-			storage: createJSONStorage(() => AsyncStorage)
+			name: "theme",
+			storage: createJSONStorage(() => AsyncStorage, {
+				reviver: (key, value) => {
+					if (key === "theme") {
+						return value === true || value === "true"
+					}
+					return value
+				}
+			})
 		}
 	)
 )

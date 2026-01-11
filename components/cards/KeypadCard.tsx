@@ -1,5 +1,5 @@
 import { Text, TouchableOpacity, View } from "react-native"
-import React from "react"
+import React, { useEffect } from "react"
 import BackIcon from "@/icons/backIcon"
 import * as Haptics from "expo-haptics"
 import { LeaveBalanceHistory } from "@/globalInterface"
@@ -70,8 +70,9 @@ const KeypadCard = ({
 		setBalance("0")
 		setHours("0")
 		setMinutes("0")
-		setSelect("balance")
+
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+		setSelect("balance")
 	}
 
 	function clear() {
@@ -119,6 +120,7 @@ const KeypadCard = ({
 			) {
 				return theme ? "bg-neutral-950" : "bg-red-500"
 			}
+			return theme ? "bg-neutral-800" : "bg-white"
 		}
 
 		return theme ? "bg-neutral-800" : "bg-white"
@@ -132,6 +134,10 @@ const KeypadCard = ({
 		["Reset All", "Clear"]
 	]
 
+	useEffect(() => {
+		console.log("select is now: ", select)
+	}, [select])
+
 	return (
 		<View className="flex-none">
 			{rows.map((row, ri) => (
@@ -144,12 +150,12 @@ const KeypadCard = ({
 							else append(b)
 						}
 
-						const buttonClass = `${getButtonClass(b)} rounded-2xl justify-center items-center flex-1 h-[5rem] mx-1 transition-colors`
+						const buttonClass = `${getButtonClass(b)} rounded-2xl justify-center items-center flex-1 h-[5rem] mx-1`
 
 						return (
 							<TouchableOpacity
 								key={bi}
-								onPressIn={onPress}
+								onPress={onPress}
 								activeOpacity={0.7}
 								className={buttonClass}
 							>

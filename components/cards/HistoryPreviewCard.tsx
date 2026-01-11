@@ -1,7 +1,7 @@
 import { LeaveBalanceHistory } from "@/globalInterface"
 import HistoryIcon from "@/icons/historyIcon"
 import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import { FlatList, Text, View } from "react-native"
 
 const HistoryPreviewCard = ({
@@ -11,6 +11,15 @@ const HistoryPreviewCard = ({
 	history: LeaveBalanceHistory[]
 	theme: boolean
 }) => {
+	const flatListRef = useRef<FlatList>(null)
+
+	// Auto-scroll to bottom when history updates
+	useEffect(() => {
+		if (history.length > 0) {
+			flatListRef.current?.scrollToEnd({ animated: true })
+		}
+	}, [history])
+
 	return (
 		<View
 			className={`${theme ? "bg-neutral-900" : "bg-neutral-50"} rounded-2xl flex flex-1`}
@@ -33,8 +42,10 @@ const HistoryPreviewCard = ({
 			</View>
 			<View className="p-4 overflow-y-auto flex-1">
 				<FlatList
+					ref={flatListRef}
 					data={history}
 					keyExtractor={(item) => item.timeStamps}
+					scrollEnabled={true}
 					renderItem={({ item }) => (
 						<View className="flex flex-row justify-between">
 							<Text

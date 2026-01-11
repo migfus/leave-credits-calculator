@@ -9,9 +9,19 @@ export function leaveBalanceComputation(data: {
 	// CONVERT 1/480
 	const computed_hours = leaveEquivalentFromCSV(Number(data.hours) * 60)
 	const computed_mins = leaveEquivalentFromCSV(Number(data.minutes))
-	const cost = computed_hours + computed_mins
 
-	return [cost, roundUp(Number(data.balance) - cost)]
+	let cost = computed_hours + computed_mins
+	let final_balance = roundUp(Number(data.balance) - cost)
+	// Add .000 if cost is a whole number (e.g., 2 → 2.000)
+	if (Number.isInteger(cost)) {
+		cost = Number(cost.toFixed(3))
+	}
+
+	if (Number.isInteger(final_balance)) {
+		final_balance = Number(final_balance.toFixed(3))
+	}
+
+	return [cost, final_balance]
 	// return Number(data.balance) + Number(data.hours) + Number(data.minutes)
 }
 

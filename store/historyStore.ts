@@ -7,6 +7,7 @@ interface LeaveHistoryState {
 	history: LeaveBalanceHistory[]
 	addHistory: (item: LeaveBalanceHistory) => void
 	reset: () => void
+	onHistoryUpdate?: (callback: () => void) => void
 }
 
 export const useLeaveHistory = create<LeaveHistoryState>()(
@@ -19,7 +20,8 @@ export const useLeaveHistory = create<LeaveHistoryState>()(
 					history: [...state.history, item]
 				})),
 
-			reset: () => set({ history: [] })
+			reset: () => set({ history: [] }),
+			onHistoryUpdate: undefined
 		}),
 		{
 			name: "leave-history-store",

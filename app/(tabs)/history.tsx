@@ -6,7 +6,6 @@ import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import {
 	Alert,
 	FlatList,
-	ScrollView,
 	Text,
 	ToastAndroid,
 	TouchableOpacity,

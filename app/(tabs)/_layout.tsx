@@ -4,9 +4,9 @@ import { useThemeStore } from "@/store/themeStore"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { StatusBar } from "expo-status-bar"
 import { SafeAreaView } from "react-native-safe-area-context"
-import History from "./History"
-import Index from "./Index"
-import Settings from "./Settings"
+import history from "./history"
+import index from "./index"
+import settings from "./settings"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -34,9 +34,9 @@ const Layout = () => {
 					}
 				}}
 			>
-				<Tab.Screen name="Home" component={Index} />
-				<Tab.Screen name="History" component={History} />
-				<Tab.Screen name="Settings" component={Settings} />
+				<Tab.Screen name="Home" component={index} />
+				<Tab.Screen name="History" component={history} />
+				<Tab.Screen name="Settings" component={settings} />
 			</Tab.Navigator>
 
 			<StatusBar style={theme ? "light" : "dark"} />
