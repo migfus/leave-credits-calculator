@@ -4,9 +4,9 @@ import { useThemeStore } from "@/store/themeStore"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { StatusBar } from "expo-status-bar"
 import { SafeAreaView } from "react-native-safe-area-context"
-import History from "./history"
-import Index from "./index"
-import Settings from "./settings"
+import History from "./History"
+import Index from "./Index"
+import Settings from "./Settings"
 
 const Tab = createMaterialTopTabNavigator()
 

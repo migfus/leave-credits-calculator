@@ -122,7 +122,7 @@ export default function Index() {
 	}
 
 	if (!hydrated) {
-		return null // or splash screen
+		return null
 	}
 
 	function reset() {
@@ -139,7 +139,7 @@ export default function Index() {
 	}
 
 	return (
-		<ScrollView
+		<View
 			className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} flex-1 gap-4 p-4`}
 		>
 			<HistoryCard
@@ -149,6 +149,6 @@ export default function Index() {
 				}}
 				theme={theme}
 			/>
-		</ScrollView>
+		</View>
 	)
 }

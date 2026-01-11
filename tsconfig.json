@@ -13,5 +13,7 @@
 		".expo/types/**/*.ts",
 		"expo-env.d.ts",
 		"nativewind-env.d.ts"
-	]
+	],
+	"typescript.removeUnusedImports": false,
+	"typescript.organizeImports": false
 }
