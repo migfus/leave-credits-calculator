@@ -1,6 +1,6 @@
 {
 	"name": "leave-balance-calculator",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "",
 	"type": "module",
 	"main": "main.js",
@@ -33,7 +33,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"electron": "^39.2.7",
+		"electron": "^22.3.27",
 		"electron-builder": "^25.1.8"
 	}
 }

@@ -134,7 +134,7 @@ export default function KeypadCard({
 	}, [select, setBalance, setHours, setMinutes])
 
 	function getButtonClass(b: string) {
-		if (b === "Reset All" && balance === "0") {
+		if (b === "Reset" && balance === "0") {
 			return theme ? "bg-neutral-950" : "bg-neutral-200"
 		}
 		if (b === "." && select !== "balance") {
@@ -162,7 +162,7 @@ export default function KeypadCard({
 		["4", "5", "6"],
 		["7", "8", "9"],
 		["Del", "0", "."],
-		["+/-", "Reset All", "Clear"]
+		["+/-", "Reset", "Clear"]
 	]
 
 	useEffect(() => {
@@ -213,7 +213,7 @@ export default function KeypadCard({
 				<View key={ri} className="flex-row justify-between mb-3">
 					{row.map((b, bi) => {
 						const onPress = () => {
-							if (b === "Reset All") reset()
+							if (b === "Reset") reset()
 							else if (b === "Del") del()
 							else if (b === "Clear") clear()
 							else if (b === "+/-") reverse()
@@ -230,23 +230,23 @@ export default function KeypadCard({
 								className={buttonClass}
 							>
 								{b === "Del" ? (
-									<BackIcon theme={theme} width={32} height={32} />
+									<BackIcon theme={theme} width={26} height={26} />
 								) : b === "Clear" ? (
 									<View className="flex flex-row gap-2 items-center">
-										<XIcon theme={theme} width={32} height={32} />
+										<XIcon theme={theme} width={26} height={26} />
 										<Text
-											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl `}
+											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-xl `}
 										>
 											Clear
 										</Text>
 									</View>
-								) : b === "Reset All" ? (
+								) : b === "Reset" ? (
 									<View className="flex flex-row gap-2 items-center">
-										<FreshIcon theme={theme} width={32} height={32} />
+										<FreshIcon theme={theme} width={26} height={26} />
 										<Text
-											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl `}
+											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-xl `}
 										>
-											Reset All
+											Reset
 										</Text>
 									</View>
 								) : (

@@ -11,6 +11,7 @@ import {
 	TouchableOpacity,
 	View
 } from "react-native"
+import * as Haptics from "expo-haptics"
 
 import React from "react"
 
@@ -148,6 +149,8 @@ export default function History() {
 	}
 
 	function reset() {
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+
 		console.log("resetting history")
 
 		// React Native Web: use browser confirm/alert
@@ -173,6 +176,8 @@ export default function History() {
 				onPress: () => {
 					ToastAndroid.show("History Cleared", ToastAndroid.SHORT)
 					resetHistory()
+
+					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
 				}
 			}
 		])

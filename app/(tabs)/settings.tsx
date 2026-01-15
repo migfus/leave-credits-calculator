@@ -31,7 +31,7 @@ const Settings = () => {
 							Leave Credit Balance Calculator
 						</Text>
 						<Text className={`${theme ? "text-brand-50" : "text-brand-900"} `}>
-							v1.0.0
+							v1.0.1
 						</Text>
 					</View>
 				</View>

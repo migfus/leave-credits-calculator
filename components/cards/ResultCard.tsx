@@ -4,6 +4,7 @@ import { leaveBalanceComputation } from "@/utils"
 import * as Clipboard from "expo-clipboard"
 import React, { useEffect, useRef, useState } from "react"
 import { Pressable, Text, View } from "react-native"
+import * as Haptics from "expo-haptics"
 
 const ResultCard = ({
 	balance,
@@ -32,6 +33,7 @@ const ResultCard = ({
 		setCopied(which)
 		if (timerRef.current) clearTimeout(timerRef.current)
 		timerRef.current = setTimeout(() => setCopied(null), 2000)
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
 	}
 
 	const costCopyValue =

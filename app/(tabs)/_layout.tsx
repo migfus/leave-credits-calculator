@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import history from "./history"
 import index from "./index"
 import settings from "./settings"
+import * as Haptics from "expo-haptics"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -32,7 +33,7 @@ const Layout = () => {
 					tabBarInactiveTintColor: theme ? "#a3a3a3" : "#737373",
 					tabBarStyle: {
 						backgroundColor: theme ? "#171717" : "#f5f5f5",
-						paddingVertical: 8
+						paddingVertical: 2
 					},
 					tabBarShowIcon: true,
 					tabBarShowLabel: false
@@ -42,7 +43,12 @@ const Layout = () => {
 					name="Home"
 					component={index}
 					options={{
-						tabBarIcon: () => <HomeIcon width={32} height={32} theme={theme} />
+						tabBarIcon: () => <HomeIcon width={30} height={30} theme={theme} />
+					}}
+					listeners={{
+						tabPress: () => {
+							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+						}
 					}}
 				/>
 				<Tab.Screen
@@ -50,8 +56,13 @@ const Layout = () => {
 					component={history}
 					options={{
 						tabBarIcon: () => (
-							<HistoryIcon theme={theme} width={32} height={32} />
+							<HistoryIcon theme={theme} width={28} height={28} />
 						)
+					}}
+					listeners={{
+						tabPress: () => {
+							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+						}
 					}}
 				/>
 				<Tab.Screen
@@ -59,8 +70,13 @@ const Layout = () => {
 					component={settings}
 					options={{
 						tabBarIcon: () => (
-							<SettingsIcon theme={theme} width={32} height={32} />
+							<SettingsIcon theme={theme} width={28} height={28} />
 						)
+					}}
+					listeners={{
+						tabPress: () => {
+							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+						}
 					}}
 				/>
 			</Tab.Navigator>

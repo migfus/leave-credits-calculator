@@ -79,7 +79,7 @@ const HistoryPreviewCard = ({
 										</Text>
 									</View>
 
-									<View className="flex flex-row items-end gap-1 w-[7rem] justify-end">
+									<View className="flex flex-row items-end gap-1 min-w-[8rem] justify-end">
 										<Text
 											numberOfLines={1}
 											className={`${theme ? "text-neutral-200" : "text-neutral-800"} text-lg font-semibold`}
@@ -116,7 +116,7 @@ const HistoryPreviewCard = ({
 									</View>
 								</View>
 
-								<View className="flex flex-row w-16 justify-end">
+								<View className="flex flex-row min-w-[6rem] justify-end">
 									<Text
 										numberOfLines={1}
 										className={`${theme ? "text-neutral-200" : "text-neutral-800"} font-semibold text-right text-xl`}

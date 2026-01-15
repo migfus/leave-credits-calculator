@@ -38,8 +38,8 @@ function createWindow() {
 
 	const win = new BrowserWindow({
 		title: "Leave Balance Calculator",
-		width: 400,
-		height: 800,
+		width: 450,
+		height: 850,
 		autoHideMenuBar: true,
 		icon: path.join(__dirname, "..", "assets", "images", "icon.png"),
 		webPreferences: {

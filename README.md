@@ -46,5 +46,15 @@ To learn more about developing your project with Expo, look at the following res
 
 Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Electron
+
+### Windows 8 note
+
+Windows 8 cannot run recent Electron versions. If the installed EXE does not open on Windows 8, build the installer with an older Electron major that still supports Windows 8 (this repo pins the Electron app under `electron/` accordingly).
+
+Build steps:
+
+- `cd electron`
+- `npm run export:web`
+- `npm run build:win`
