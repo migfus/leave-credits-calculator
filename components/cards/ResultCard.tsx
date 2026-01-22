@@ -1,25 +1,26 @@
 import { leaveBalanceComputation } from "@/utils"
+import { useBottomSheet } from "@gorhom/bottom-sheet"
 import React, { useEffect, useRef } from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import useBottomSheetStore from "@/store/bottomSheetStore"
 
 interface ResultCardProps {
 	balance: string
 	hours: string
 	minutes: string
 	theme?: boolean
-	onPress?: () => void
 }
 
 const ResultCard = ({
 	balance,
 	hours,
 	minutes,
-	theme = false,
-	onPress
+	theme = false
 }: ResultCardProps) => {
 	const result = { balance, hours, minutes }
 	const new_balance = leaveBalanceComputation(result)
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+	const $changeListStore = useBottomSheetStore((s) => s.changeList)
 
 	useEffect(() => {
 		const timeoutId = timerRef.current
@@ -32,7 +33,12 @@ const ResultCard = ({
 	return (
 		<>
 			<TouchableOpacity
-				onPress={onPress}
+				onPress={() =>
+					$changeListStore([
+						{ name: new_balance[1], link: new_balance[1], type: "copy" },
+						{ name: new_balance[0], link: new_balance[0], type: "copy" }
+					])
+				}
 				className=" rounded-2xl flex flex-col justify-between p-2 flex-none"
 			>
 				<View className="flex flex-col justify-end gap-2">
@@ -93,15 +99,3 @@ const ResultCard = ({
 	)
 }
 export default ResultCard
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "grey"
-	},
-	contentContainer: {
-		flex: 1,
-		padding: 36,
-		alignItems: "center"
-	}
-})

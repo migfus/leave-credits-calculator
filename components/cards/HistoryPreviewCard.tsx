@@ -2,7 +2,12 @@ import { LeaveBalanceHistory } from "@/globalInterface"
 import HistoryIcon from "@/icons/historyIcon"
 import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import React, { useEffect, useRef } from "react"
-import { FlatList, Text, View } from "react-native"
+import { FlatList, Text, TouchableOpacity, View } from "react-native"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
+
+type RootStackParamList = {
+	History: undefined
+}
 
 const HistoryPreviewCard = ({
 	history,
@@ -12,6 +17,7 @@ const HistoryPreviewCard = ({
 	theme: boolean
 }) => {
 	const flatListRef = useRef<FlatList>(null)
+	const navigation = useNavigation<NavigationProp<RootStackParamList>>()
 
 	// Auto-scroll to bottom when history updates
 	useEffect(() => {
@@ -21,8 +27,9 @@ const HistoryPreviewCard = ({
 	}, [history])
 
 	return (
-		<View
+		<TouchableOpacity
 			className={`${theme ? "bg-neutral-900" : "bg-neutral-50"} rounded-3xl flex flex-1 p-1`}
+			onPress={() => navigation.navigate("History")}
 		>
 			<View className="p-4 rounded-2xl flex justify-between flex-row items-center ">
 				<View className="flex flex-row gap-2 items-center">
@@ -119,7 +126,7 @@ const HistoryPreviewCard = ({
 					)}
 				></FlatList>
 			</View>
-		</View>
+		</TouchableOpacity>
 	)
 }
 
