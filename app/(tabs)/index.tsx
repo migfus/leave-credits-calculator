@@ -7,8 +7,8 @@ import { TextInput, View } from "react-native"
 import ActivitySection from "@/components/others/ActivitySection"
 import { useLeaveHistory } from "@/store/historyStore"
 import { useThemeStore } from "@/store/themeStore"
-import * as Haptics from "expo-haptics"
 import React, { useRef, useState } from "react"
+import { useVibrateStore } from "@/store/vibrateStore"
 
 export default function Index() {
 	const [balance, setBalance] = useState<string>("0")
@@ -25,8 +25,10 @@ export default function Index() {
 	const $leave_hydrated = useLeaveHistory.persist.hasHydrated()
 	const $theme = useThemeStore((s) => s.theme)
 	const $theme_hydrated = useThemeStore.persist.hasHydrated()
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
 
-	if (!$leave_hydrated || !$theme_hydrated) {
+	if (!$leave_hydrated || !$theme_hydrated || !$vibrateHydrated) {
 		return <ActivitySection title="Hydrating..." sub_title="(tabs)/index" />
 	}
 
@@ -55,7 +57,7 @@ export default function Index() {
 						inputRef={balanceInputRef}
 						onPressIn={() => {
 							setSelect("balance")
-							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+							$vibrate()
 						}}
 						setValue={(value: string) => {
 							setBalance(value)
@@ -73,7 +75,7 @@ export default function Index() {
 						inputRef={hoursInputRef}
 						onPressIn={() => {
 							setSelect("hours")
-							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+							$vibrate()
 						}}
 						setValue={(value: string) => setHours(value)}
 						theme={$theme}
@@ -86,7 +88,7 @@ export default function Index() {
 						inputRef={minutesInputRef}
 						onPressIn={() => {
 							setSelect("minutes")
-							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+							$vibrate()
 						}}
 						setValue={(value: string) => setMinutes(value)}
 						theme={$theme}

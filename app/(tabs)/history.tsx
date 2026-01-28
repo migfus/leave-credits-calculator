@@ -8,7 +8,8 @@ import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import moment from "moment"
 import React, { useMemo, useState } from "react"
-import * as Haptics from "expo-haptics"
+import { useVibrateStore } from "@/store/vibrateStore"
+import ActivitySection from "@/components/others/ActivitySection"
 
 const HistoryCard = ({
 	history,
@@ -23,6 +24,8 @@ const HistoryCard = ({
 	const [selected_filter, setSelectedFilter] = useState("All")
 
 	const $changeListStore = useBottomSheetStore((s) => s.changeList)
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
 
 	const newestFirstHistory = useMemo(() => {
 		const now = moment()
@@ -47,6 +50,15 @@ const HistoryCard = ({
 
 		return [...filtered].reverse()
 	}, [history, selected_filter])
+
+	if (!$vibrateHydrated) {
+		return (
+			<ActivitySection
+				title="Hydrating..."
+				sub_title="(tabs)/history/HistoryCard"
+			/>
+		)
+	}
 
 	return (
 		<View className="flex flex-1 gap-2">
@@ -94,7 +106,7 @@ const HistoryCard = ({
 							<TouchableOpacity
 								onPress={() => {
 									setSelectedFilter(item)
-									Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+									$vibrate()
 								}}
 								className={`${theme ? "bg-neutral-900" : "bg-white"} "flex flex-row justify-between py-2 px-4 rounded-full`}
 							>
@@ -242,26 +254,20 @@ const HistoryCard = ({
 }
 
 export default function History() {
-	const history = useLeaveHistory((s) => s.history)
-	const hydrated = useLeaveHistory.persist.hasHydrated()
-	const resetHistory = useLeaveHistory((s) => s.reset)
+	const $history = useLeaveHistory((s) => s.history)
+	const $leaveHistoryHydrated = useLeaveHistory.persist.hasHydrated()
+	const $resetHistory = useLeaveHistory((s) => s.reset)
 
 	const theme = useThemeStore((s) => s.theme)
-	const theme_hydrated = useThemeStore.persist.hasHydrated()
+	const $themeHydrated = useThemeStore.persist.hasHydrated()
 	const $changeList = useBottomSheetStore((s) => s.changeList)
 
 	function clearHistory() {
-		resetHistory()
-
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+		$resetHistory()
 	}
 
-	if (!theme_hydrated) {
-		return
-	}
-
-	if (!hydrated) {
-		return null
+	if (!$themeHydrated || !$leaveHistoryHydrated) {
+		return <ActivitySection title="Hydrating..." sub_title="(tabs)/history" />
 	}
 
 	return (
@@ -269,7 +275,7 @@ export default function History() {
 			className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} flex-1 gap-4 p-4`}
 		>
 			<HistoryCard
-				history={history}
+				history={$history}
 				onPress={() =>
 					$changeList([
 						{

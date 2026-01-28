@@ -19,6 +19,7 @@ import React, { useCallback, useMemo, useState } from "react"
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import useComputationMethodStore from "@/store/computationMethodStore"
 import { useVibrateStore } from "@/store/vibrateStore"
+import Constants from "expo-constants"
 
 const Settings = () => {
 	const $theme = useThemeStore((s) => s.theme)
@@ -35,6 +36,8 @@ const Settings = () => {
 	)
 	const $computation_method_hydrated =
 		useComputationMethodStore.persist.hasHydrated()
+
+	const APP_VER = Constants.expoConfig?.extra?.APP_VER ?? ""
 
 	const [message, setMessage] = useState("")
 	const [sent_message, setSentMessage] = useState(false)
@@ -115,7 +118,7 @@ const Settings = () => {
 						<Text
 							className={`${$theme ? "text-neutral-400" : "text-neutral-500"} `}
 						>
-							v1.1.1
+							v{APP_VER}
 						</Text>
 					</View>
 				</View>
@@ -272,6 +275,7 @@ const Settings = () => {
 									placeholder="Message"
 									placeholderTextColor={$theme ? "#b0b0b0" : "#525252"}
 									onChangeText={setMessage}
+									onFocus={$vibrate}
 								/>
 							</View>
 
@@ -284,7 +288,10 @@ const Settings = () => {
 									/>
 								) : (
 									<TouchableOpacity
-										onPress={sendSuggestion}
+										onPress={() => {
+											sendSuggestion()
+											$vibrate()
+										}}
 										disabled={isMessageEmpty}
 										className={`${
 											isMessageEmpty

@@ -3,7 +3,6 @@ import HistoryIcon from "@/icons/historyIcon"
 import HomeIcon from "@/icons/homeIcon"
 import InformationIcon from "@/icons/informationIcon"
 import SettingsIcon from "@/icons/settingsIcon"
-import * as Haptics from "expo-haptics"
 import { StatusBar } from "expo-status-bar"
 import { SafeAreaView } from "react-native-safe-area-context"
 import history from "./history"
@@ -16,6 +15,7 @@ import { useThemeStore } from "@/store/themeStore"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import type { ComponentType } from "react"
 import { Platform, View } from "react-native"
+import { useVibrateStore } from "@/store/vibrateStore"
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -115,6 +115,18 @@ function TabScreen({
 	size = 28,
 	padding = 16
 }: TabScreenProps) {
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
+
+	if (!$vibrateHydrated) {
+		return (
+			<ActivitySection
+				title="Hydrating..."
+				sub_title="(tabs)/_layout/TabScreen"
+			/>
+		)
+	}
+
 	return (
 		<Tab.Screen
 			name={name}
@@ -139,7 +151,7 @@ function TabScreen({
 			}}
 			listeners={{
 				tabPress: () => {
-					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+					$vibrate()
 				}
 			}}
 		/>

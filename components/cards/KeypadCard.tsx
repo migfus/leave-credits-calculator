@@ -4,8 +4,9 @@ import XIcon from "@/icons/xIcon"
 import { Platform, Text, TouchableOpacity, View } from "react-native"
 
 import { LeaveBalanceHistory } from "@/globalInterface"
-import * as Haptics from "expo-haptics"
+import { useVibrateStore } from "@/store/vibrateStore"
 import React, { useCallback, useEffect } from "react"
+import ActivitySection from "../others/ActivitySection"
 
 export default function KeypadCard({
 	theme,
@@ -32,9 +33,12 @@ export default function KeypadCard({
 	setSelect: React.Dispatch<React.SetStateAction<string>>
 	onResetAll?: () => void
 }) {
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
+
 	const append = useCallback(
 		(v: string) => {
-			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+			$vibrate()
 
 			switch (select) {
 				case "balance":
@@ -63,7 +67,16 @@ export default function KeypadCard({
 					break
 			}
 		},
-		[balance, hours, minutes, select, setBalance, setHours, setMinutes]
+		[
+			$vibrate,
+			balance,
+			hours,
+			minutes,
+			select,
+			setBalance,
+			setHours,
+			setMinutes
+		]
 	)
 
 	const reset = useCallback(() => {
@@ -83,10 +96,11 @@ export default function KeypadCard({
 		setHours("0")
 		setMinutes("0")
 
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
+		$vibrate()
 		setSelect("balance")
 		onResetAll?.()
 	}, [
+		$vibrate,
 		addHistory,
 		balance,
 		hours,
@@ -110,8 +124,8 @@ export default function KeypadCard({
 				setMinutes("0")
 				break
 		}
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-	}, [select, setBalance, setHours, setMinutes])
+		$vibrate()
+	}, [$vibrate, select, setBalance, setHours, setMinutes])
 
 	const reverse = useCallback(() => {
 		if (select === "balance") {
@@ -131,8 +145,8 @@ export default function KeypadCard({
 				setMinutes((s) => (s.length > 1 ? s.slice(0, -1) : "0"))
 				break
 		}
-		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-	}, [select, setBalance, setHours, setMinutes])
+		$vibrate()
+	}, [$vibrate, select, setBalance, setHours, setMinutes])
 
 	function getButtonClass(b: string) {
 		if (b === "Reset" && balance === "0") {
@@ -207,6 +221,12 @@ export default function KeypadCard({
 		return () => window.removeEventListener("keydown", handler)
 		// Intentionally depend on state/handlers so selected field stays correct.
 	}, [append, clear, del, reset])
+
+	if (!$vibrateHydrated) {
+		return (
+			<ActivitySection title="Hydrating..." sub_title="components/KeypadCard" />
+		)
+	}
 
 	return (
 		<View className="flex-none">
