@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react"
 import { Platform, Text, TextInput, View } from "react-native"
+
+import React, { useEffect, useMemo, useState } from "react"
 
 export default function TextInputForm({
 	title,
@@ -27,7 +28,6 @@ export default function TextInputForm({
 	const [selection, setSelection] = useState(endSelection)
 
 	useEffect(() => {
-		// Keep caret at the end whenever value changes.
 		setSelection(endSelection)
 	}, [endSelection])
 

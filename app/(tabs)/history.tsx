@@ -1,21 +1,14 @@
-import { LeaveBalanceHistory } from "@/globalInterface"
 import FreshIcon from "@/icons/freshIcon"
+import { FlatList, Text, TouchableOpacity, View } from "react-native"
+
+import { LeaveBalanceHistory } from "@/globalInterface"
 import { useLeaveHistory } from "@/store/historyStore"
 import { useThemeStore } from "@/store/themeStore"
 import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
-import {
-	Alert,
-	FlatList,
-	Text,
-	ToastAndroid,
-	TouchableOpacity,
-	View
-} from "react-native"
-import * as Haptics from "expo-haptics"
-
-import React, { useMemo, useState } from "react"
-import moment from "moment"
 import useBottomSheetStore from "@/store/bottomSheetStore"
+import moment from "moment"
+import React, { useMemo, useState } from "react"
+import * as Haptics from "expo-haptics"
 
 const HistoryCard = ({
 	history,
@@ -28,6 +21,9 @@ const HistoryCard = ({
 }) => {
 	const filters = ["All", "Today", "This Week", "This Month", "This Year"]
 	const [selected_filter, setSelectedFilter] = useState("All")
+
+	const $changeListStore = useBottomSheetStore((s) => s.changeList)
+
 	const newestFirstHistory = useMemo(() => {
 		const now = moment()
 		const filtered = history.filter((item) => {
@@ -51,7 +47,6 @@ const HistoryCard = ({
 
 		return [...filtered].reverse()
 	}, [history, selected_filter])
-	const $changeListStore = useBottomSheetStore((s) => s.changeList)
 
 	return (
 		<View className="flex flex-1 gap-2">

@@ -1,8 +1,10 @@
 import { Linking, Text, TouchableOpacity, View } from "react-native"
-import React, { useState } from "react"
 import ChevronDownIcon from "@/icons/chevronDownIcon"
 import MinusIcon from "@/icons/minusIcon"
+
+import React, { useState } from "react"
 import { useThemeStore } from "@/store/themeStore"
+import { useVibrateStore } from "@/store/vibrateStore"
 
 interface CollapseCardProps {
 	title: string
@@ -20,9 +22,11 @@ interface CollapseCardProps {
 const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 	const [collapse, setCollapse] = useState(false)
 	const $theme = useThemeStore((s) => s.theme)
-	const $peristTheme = useThemeStore.persist.hasHydrated
+	const $peristTheme = useThemeStore.persist.hasHydrated()
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
 
-	if (!$peristTheme) {
+	if (!$peristTheme && !$vibrateHydrated) {
 		return
 	}
 
@@ -32,7 +36,10 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 				className={`${collapse ? "rounded-b-xl rounded-t-3xl" : "rounded-b-3xl rounded-t-3xl"} ${$theme ? "bg-neutral-900" : "bg-white"} p-6 flex flex-col gap-4`}
 			>
 				<TouchableOpacity
-					onPress={() => setCollapse(!collapse)}
+					onPress={() => {
+						setCollapse(!collapse)
+						$vibrate()
+					}}
 					className="flex flex-row justify-between items-center"
 				>
 					<View className="flex flex-col gap-2">

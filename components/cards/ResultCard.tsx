@@ -1,8 +1,9 @@
+import { Text, TouchableOpacity, View } from "react-native"
+
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import useComputationMethodStore from "@/store/computationMethodStore"
 import { leaveBalanceComputation } from "@/utils"
 import React, { useEffect, useRef } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
 
 interface ResultCardProps {
 	balance: string
@@ -17,9 +18,9 @@ const ResultCard = ({
 	minutes,
 	theme = false
 }: ResultCardProps) => {
-	const method = useComputationMethodStore((s) => s.method)
+	const $method = useComputationMethodStore((s) => s.method)
 
-	const result = { balance, hours, minutes, method }
+	const result = { balance, hours, minutes, method: $method }
 	const new_balance = leaveBalanceComputation(result)
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const $changeListStore = useBottomSheetStore((s) => s.changeList)

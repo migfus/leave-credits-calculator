@@ -1,10 +1,11 @@
-import { LeaveBalanceHistory } from "@/globalInterface"
 import BackIcon from "@/icons/backIcon"
 import FreshIcon from "@/icons/freshIcon"
 import XIcon from "@/icons/xIcon"
+import { Platform, Text, TouchableOpacity, View } from "react-native"
+
+import { LeaveBalanceHistory } from "@/globalInterface"
 import * as Haptics from "expo-haptics"
 import React, { useCallback, useEffect } from "react"
-import { Platform, Text, TouchableOpacity, View } from "react-native"
 
 export default function KeypadCard({
 	theme,

@@ -1,39 +1,41 @@
+import BottomSheetModalComponent from "@/components/bottom-sheet/BottomSheetModalComponent"
 import HistoryIcon from "@/icons/historyIcon"
 import HomeIcon from "@/icons/homeIcon"
 import InformationIcon from "@/icons/informationIcon"
 import SettingsIcon from "@/icons/settingsIcon"
-import { useThemeStore } from "@/store/themeStore"
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import * as Haptics from "expo-haptics"
 import { StatusBar } from "expo-status-bar"
-import React from "react"
-import { Platform, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 import history from "./history"
 import index from "./index"
 import Information from "./information"
 import settings from "./settings"
-import BottomSheetModalComponent from "@/components/bottom-sheet/BottomSheetModalComponent"
+
+import ActivitySection from "@/components/others/ActivitySection"
+import { useThemeStore } from "@/store/themeStore"
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import type { ComponentType } from "react"
+import { Platform, View } from "react-native"
 
 const Tab = createMaterialTopTabNavigator()
 
 const Layout = () => {
-	const theme = useThemeStore((s) => s.theme)
-	const theme_hydrated = useThemeStore.persist.hasHydrated()
+	const $theme = useThemeStore((s) => s.theme)
+	const $themeHydrated = useThemeStore.persist.hasHydrated()
 
-	if (!theme_hydrated) {
-		return null
+	if (!$themeHydrated) {
+		return <ActivitySection title="Hydrating..." sub_title="(tabs)/_layout" />
 	}
 
 	return (
 		<BottomSheetModalComponent>
 			<SafeAreaView
-				className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} h-full`}
+				className={`${$theme ? "bg-neutral-950" : "bg-neutral-200"} h-full`}
 			>
 				<Tab.Navigator
 					screenOptions={{
 						tabBarIndicatorStyle: {
-							backgroundColor: theme ? "#223935" : "#d8efe8",
+							backgroundColor: $theme ? "#223935" : "#d8efe8",
 							height: "100%",
 							borderRadius: 999
 						},
@@ -41,14 +43,14 @@ const Layout = () => {
 							padding: 0
 						},
 
-						tabBarActiveTintColor: theme ? "#b4c5c0" : "#295049",
-						tabBarInactiveTintColor: theme ? "#cacaca" : "#393939",
+						tabBarActiveTintColor: $theme ? "#b4c5c0" : "#295049",
+						tabBarInactiveTintColor: $theme ? "#cacaca" : "#393939",
 						tabBarStyle: {
 							marginTop: 8,
 							marginHorizontal: 12,
 							borderRadius: 999,
 							overflow: "hidden",
-							backgroundColor: theme ? "#171717" : "#f5f5f5",
+							backgroundColor: $theme ? "#171717" : "#f5f5f5",
 							...(Platform.OS === "android"
 								? { elevation: 10 }
 								: {
@@ -74,90 +76,72 @@ const Layout = () => {
 						tabBarShowLabel: false
 					}}
 				>
-					<Tab.Screen
-						name="Home"
-						component={index}
-						options={{
-							tabBarIcon: ({ color }) => (
-								<View style={{ height: "100%", justifyContent: "center" }}>
-									<HomeIcon size={30} color={color} />
-								</View>
-							),
-							tabBarItemStyle: {
-								padding: 16
-							}
-						}}
-						listeners={{
-							tabPress: () => {
-								Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-							}
-						}}
-					/>
-					<Tab.Screen
-						name="History"
-						component={history}
-						options={{
-							tabBarIcon: ({ color }) => (
-								<View style={{ height: "100%", justifyContent: "center" }}>
-									<HistoryIcon color={color} size={28} />
-								</View>
-							),
-							tabBarItemStyle: {
-								padding: 16
-							}
-						}}
-						listeners={{
-							tabPress: () => {
-								Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-							}
-						}}
-					/>
-
-					<Tab.Screen
-						name="Information"
-						component={Information}
-						options={{
-							tabBarIcon: ({ color }) => (
-								<View style={{ height: "100%", justifyContent: "center" }}>
-									<InformationIcon size={30} color={color} />
-								</View>
-							),
-							tabBarItemStyle: {
-								padding: 16
-							}
-						}}
-						listeners={{
-							tabPress: () => {
-								Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-							}
-						}}
-					/>
-
-					<Tab.Screen
-						name="Settings"
-						component={settings}
-						options={{
-							tabBarIcon: ({ color }) => (
-								<View style={{ height: "100%", justifyContent: "center" }}>
-									<SettingsIcon color={color} size={28} />
-								</View>
-							),
-							tabBarItemStyle: {
-								padding: 16
-							}
-						}}
-						listeners={{
-							tabPress: () => {
-								Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-							}
-						}}
-					/>
+					{TabScreen({
+						name: "Home",
+						component: index,
+						icon: "home",
+						size: 30
+					})}
+					{TabScreen({ name: "History", component: history, icon: "history" })}
+					{TabScreen({
+						name: "Information",
+						component: Information,
+						icon: "information",
+						size: 30
+					})}
+					{TabScreen({ name: "Settings", component: settings, icon: "cog" })}
 				</Tab.Navigator>
 
-				<StatusBar style={theme ? "light" : "dark"} />
+				<StatusBar style={$theme ? "light" : "dark"} />
 			</SafeAreaView>
 		</BottomSheetModalComponent>
 	)
 }
 
 export default Layout
+
+interface TabScreenProps {
+	name: string
+	component: ComponentType<any>
+	icon: "cog" | "history" | "information" | "home"
+	size?: number
+	padding?: number
+}
+
+function TabScreen({
+	name,
+	component,
+	icon,
+	size = 28,
+	padding = 16
+}: TabScreenProps) {
+	return (
+		<Tab.Screen
+			name={name}
+			component={component}
+			options={{
+				tabBarIcon: ({ color }) => (
+					<View style={{ height: "100%", justifyContent: "center" }}>
+						{icon === "home" ? (
+							<HomeIcon color={color} size={size} />
+						) : icon === "history" ? (
+							<HistoryIcon color={color} size={size} />
+						) : icon === "information" ? (
+							<InformationIcon color={color} size={size} />
+						) : (
+							<SettingsIcon color={color} size={size} />
+						)}
+					</View>
+				),
+				tabBarItemStyle: {
+					padding: padding
+				}
+			}}
+			listeners={{
+				tabPress: () => {
+					Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+				}
+			}}
+		/>
+	)
+}

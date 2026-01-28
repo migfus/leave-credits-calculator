@@ -1,8 +1,9 @@
-import { LeaveBalanceHistory } from "@/globalInterface"
 import HistoryIcon from "@/icons/historyIcon"
+import { FlatList, Text, View } from "react-native"
+
+import { LeaveBalanceHistory } from "@/globalInterface"
 import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import React, { useEffect, useRef } from "react"
-import { FlatList, Text, View } from "react-native"
 
 const HistoryPreviewCard = ({
 	history,
