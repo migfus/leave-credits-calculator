@@ -19,11 +19,15 @@ import { useVibrateStore } from "@/store/vibrateStore"
 
 const Tab = createMaterialTopTabNavigator()
 
-const Layout = () => {
+export default function Layout() {
 	const $theme = useThemeStore((s) => s.theme)
-	const $themeHydrated = useThemeStore.persist.hasHydrated()
+	const $vibrate = useVibrateStore((s) => s.vibrate)
+	const $hydrated = [
+		useThemeStore.persist.hasHydrated(),
+		useVibrateStore.persist.hasHydrated()
+	]
 
-	if (!$themeHydrated) {
+	if ($hydrated.some((v) => v === false)) {
 		return <ActivitySection title="Hydrating..." sub_title="(tabs)/_layout" />
 	}
 
@@ -80,16 +84,28 @@ const Layout = () => {
 						name: "Home",
 						component: index,
 						icon: "home",
-						size: 30
+						size: 30,
+						onTabPress: $vibrate
 					})}
-					{TabScreen({ name: "History", component: history, icon: "history" })}
+					{TabScreen({
+						name: "History",
+						component: history,
+						icon: "history",
+						onTabPress: $vibrate
+					})}
 					{TabScreen({
 						name: "Information",
 						component: Information,
 						icon: "information",
-						size: 30
+						size: 30,
+						onTabPress: $vibrate
 					})}
-					{TabScreen({ name: "Settings", component: settings, icon: "cog" })}
+					{TabScreen({
+						name: "Settings",
+						component: settings,
+						icon: "cog",
+						onTabPress: $vibrate
+					})}
 				</Tab.Navigator>
 
 				<StatusBar style={$theme ? "light" : "dark"} />
@@ -98,14 +114,13 @@ const Layout = () => {
 	)
 }
 
-export default Layout
-
 interface TabScreenProps {
 	name: string
 	component: ComponentType<any>
 	icon: "cog" | "history" | "information" | "home"
 	size?: number
 	padding?: number
+	onTabPress: () => void
 }
 
 function TabScreen({
@@ -113,20 +128,9 @@ function TabScreen({
 	component,
 	icon,
 	size = 28,
-	padding = 16
+	padding = 16,
+	onTabPress
 }: TabScreenProps) {
-	const $vibrate = useVibrateStore((s) => s.vibrate)
-	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
-
-	if (!$vibrateHydrated) {
-		return (
-			<ActivitySection
-				title="Hydrating..."
-				sub_title="(tabs)/_layout/TabScreen"
-			/>
-		)
-	}
-
 	return (
 		<Tab.Screen
 			name={name}
@@ -151,7 +155,7 @@ function TabScreen({
 			}}
 			listeners={{
 				tabPress: () => {
-					$vibrate()
+					onTabPress()
 				}
 			}}
 		/>

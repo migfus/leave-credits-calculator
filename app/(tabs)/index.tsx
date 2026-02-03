@@ -22,13 +22,16 @@ export default function Index() {
 
 	const $history = useLeaveHistory((s) => s.history)
 	const $addHistory = useLeaveHistory((s) => s.addHistory)
-	const $leave_hydrated = useLeaveHistory.persist.hasHydrated()
 	const $theme = useThemeStore((s) => s.theme)
-	const $theme_hydrated = useThemeStore.persist.hasHydrated()
 	const $vibrate = useVibrateStore((s) => s.vibrate)
-	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
 
-	if (!$leave_hydrated || !$theme_hydrated || !$vibrateHydrated) {
+	const $hydrated = [
+		useVibrateStore.persist.hasHydrated(),
+		useThemeStore.persist.hasHydrated(),
+		useLeaveHistory.persist.hasHydrated()
+	]
+
+	if ($hydrated.some((v) => v === false)) {
 		return <ActivitySection title="Hydrating..." sub_title="(tabs)/index" />
 	}
 

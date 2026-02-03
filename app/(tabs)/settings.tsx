@@ -20,13 +20,12 @@ import useBottomSheetStore from "@/store/bottomSheetStore"
 import useComputationMethodStore from "@/store/computationMethodStore"
 import { useVibrateStore } from "@/store/vibrateStore"
 import Constants from "expo-constants"
+import ActivitySection from "@/components/others/ActivitySection"
 
 const Settings = () => {
 	const $theme = useThemeStore((s) => s.theme)
-	const $theme_hydrated = useThemeStore.persist.hasHydrated()
 	const $vibrate_on = useVibrateStore((s) => s.vibrate_on)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
-	const $vibrateStoreHydrated = useVibrateStore.persist.hasHydrated()
 	const $vibrateToggle = useVibrateStore((s) => s.toggleVibrate)
 	const $toggleTheme = useThemeStore((s) => s.toggleTheme)
 	const $changeList = useBottomSheetStore((s) => s.changeList)
@@ -34,10 +33,15 @@ const Settings = () => {
 	const $changeComputationMethod = useComputationMethodStore(
 		(s) => s.changeMethod
 	)
-	const $computation_method_hydrated =
-		useComputationMethodStore.persist.hasHydrated()
 
-	const APP_VER = Constants.expoConfig?.extra?.APP_VER ?? ""
+	const $hydrated = [
+		useComputationMethodStore.persist.hasHydrated(),
+		useVibrateStore.persist.hasHydrated(),
+		useThemeStore.persist.hasHydrated()
+	]
+
+	const APP_VER = Constants.expoConfig?.version ?? ""
+	const APP_VER_MESSAGE = Constants.expoConfig?.extra?.version_message ?? ""
 
 	const [message, setMessage] = useState("")
 	const [sent_message, setSentMessage] = useState(false)
@@ -90,12 +94,8 @@ const Settings = () => {
 		}
 	}, [isMessageEmpty, loading_message, message])
 
-	if (
-		!$theme_hydrated ||
-		!$computation_method_hydrated ||
-		!$vibrateStoreHydrated
-	) {
-		return null
+	if ($hydrated.some((v) => v === false)) {
+		return <ActivitySection title="Hydrating..." sub_title="(tabs)/settings" />
 	}
 
 	return (
@@ -122,12 +122,9 @@ const Settings = () => {
 						</Text>
 					</View>
 				</View>
-
-				<View>
-					<Text className="text-neutral-400">- Revamp UI</Text>
-					<Text className="text-neutral-400">- Optimizations</Text>
-					<Text className="text-neutral-400">- Bug Fix</Text>
-				</View>
+				<Text className="text-neutral-400">
+					{APP_VER_MESSAGE.split("\\n").join("\n")}
+				</Text>
 
 				<View className="flex flex-row gap-4">
 					<TouchableOpacity

@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
-import * as Haptics from "expo-haptics"
 import { useVibrateStore } from "./vibrateStore"
 
 interface ThemeStore {
@@ -16,7 +15,7 @@ export const useThemeStore = create<ThemeStore>()(
 			toggleTheme: () => {
 				set({ theme: !get().theme })
 				// Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-				useVibrateStore.getState().vibrate()
+				// useVibrateStore.getState().vibrate()
 			}
 		}),
 		{

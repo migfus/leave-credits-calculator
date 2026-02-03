@@ -25,7 +25,8 @@ const HistoryCard = ({
 
 	const $changeListStore = useBottomSheetStore((s) => s.changeList)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
-	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
+
+	const $hydrated = [useVibrateStore.persist.hasHydrated()]
 
 	const newestFirstHistory = useMemo(() => {
 		const now = moment()
@@ -51,7 +52,7 @@ const HistoryCard = ({
 		return [...filtered].reverse()
 	}, [history, selected_filter])
 
-	if (!$vibrateHydrated) {
+	if ($hydrated.some((v) => v === false)) {
 		return (
 			<ActivitySection
 				title="Hydrating..."
@@ -255,18 +256,20 @@ const HistoryCard = ({
 
 export default function History() {
 	const $history = useLeaveHistory((s) => s.history)
-	const $leaveHistoryHydrated = useLeaveHistory.persist.hasHydrated()
 	const $resetHistory = useLeaveHistory((s) => s.reset)
 
 	const theme = useThemeStore((s) => s.theme)
-	const $themeHydrated = useThemeStore.persist.hasHydrated()
 	const $changeList = useBottomSheetStore((s) => s.changeList)
+	const $hydrated = [
+		useThemeStore.persist.hasHydrated(),
+		useLeaveHistory.persist.hasHydrated()
+	]
 
 	function clearHistory() {
 		$resetHistory()
 	}
 
-	if (!$themeHydrated || !$leaveHistoryHydrated) {
+	if ($hydrated.some((v) => v === false)) {
 		return <ActivitySection title="Hydrating..." sub_title="(tabs)/history" />
 	}
 

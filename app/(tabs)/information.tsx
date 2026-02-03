@@ -2,7 +2,6 @@ import { Text, View, ScrollView } from "react-native"
 import CollapseCard from "@/components/cards/CollapseCard"
 
 import { useThemeStore } from "@/store/themeStore"
-import { useVibrateStore } from "@/store/vibrateStore"
 import ActivitySection from "@/components/others/ActivitySection"
 
 const informations = [
@@ -369,9 +368,9 @@ for (let minutes = 59; minutes >= 1; minutes -= 1) {
 
 const Information = () => {
 	const $theme = useThemeStore((s) => s.theme)
-	const $theme_hydrated = useThemeStore.persist.hasHydrated()
+	const $hydrated = [useThemeStore.persist.hasHydrated()]
 
-	if (!$theme_hydrated) {
+	if ($hydrated.some((v) => v === false)) {
 		return (
 			<ActivitySection title="Hydrating..." sub_title="(tabs)/information" />
 		)
