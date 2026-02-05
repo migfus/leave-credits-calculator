@@ -1,8 +1,5 @@
-import { Text, View, ScrollView } from "react-native"
 import CollapseCard from "@/components/cards/CollapseCard"
-
-import { useThemeStore } from "@/store/themeStore"
-import ActivitySection from "@/components/others/ActivitySection"
+import { ScrollView, Text, View } from "react-native"
 
 const informations = [
 	{
@@ -366,104 +363,96 @@ for (let minutes = 59; minutes >= 1; minutes -= 1) {
 	}
 }
 
-const Information = () => {
-	const $theme = useThemeStore((s) => s.theme)
-	const $hydrated = [useThemeStore.persist.hasHydrated()]
-
-	if ($hydrated.some((v) => v === false)) {
-		return (
-			<ActivitySection title="Hydrating..." sub_title="(tabs)/information" />
-		)
-	}
-
+export default function Information() {
 	return (
-		<View className={`${$theme ? "bg-neutral-950" : "bg-neutral-200"} flex-1`}>
+		<View className={`bg-neutral-200 dark:bg-neutral-950 flex-1`}>
 			<ScrollView
-				className="gap-2 py-4"
-				contentContainerStyle={{ paddingBottom: 24, gap: 8 }}
+				className="gap-4 py-4"
+				contentContainerStyle={{ paddingBottom: 24, gap: 16 }}
 				showsVerticalScrollIndicator={false}
 			>
-				{informations.map((item) => {
-					return (
-						<View key={item.title} className="px-4">
+				<View className="flex flex-col gap-2">
+					{informations.map((item) => {
+						return (
 							<CollapseCard
 								title={item.title}
 								sub_title={item.sub_title}
 								more_info={item.more_info}
+								key={item.title}
 							/>
-						</View>
-					)
-				})}
+						)
+					})}
+				</View>
 
-				{conversion_rate.map((item, index) => {
-					return (
-						<View key={index} className="px-4">
-							<View
-								className={`${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === conversion_rate.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} ${$theme ? "bg-neutral-900" : "bg-white"}  p-6 flex flex-row gap-2 justify-between`}
-							>
-								<Text
-									className={`${$theme ? "text-neutral-300" : " text-neutral-600"} font-semibold`}
+				<View className="flex flex-col gap-2">
+					{conversion_rate.map((item, index) => {
+						return (
+							<View key={index} className="px-4">
+								<View
+									className={`${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === conversion_rate.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} bg-white dark:bg-neutral-900 p-6 flex flex-row gap-2 justify-between`}
 								>
-									{item.title}
-								</Text>
+									<Text
+										className={`text-neutral-600 dark:text-neutral-300 font-semibold`}
+									>
+										{item.title}
+									</Text>
 
-								{item.csc === item.fixed ? (
-									<View className="flex flex-row gap-2">
-										<View
-											className={`${$theme ? "bg-red-800" : "bg-red-50"} items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-										>
-											<Text
-												className={`${$theme ? "text-orange-100" : "text-orange-700"} font-semibold text-sm`}
+									{item.csc === item.fixed ? (
+										<View className="flex flex-row gap-2">
+											<View
+												className={`bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
 											>
-												{`CSC & Fixed`}
-											</Text>
-											<Text
-												className={`${$theme ? "text-red-100" : "text-orange-700"} font-semibold text-sm`}
-											>
-												{`-${item.csc}`}
-											</Text>
+												<Text
+													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
+												>
+													{`CSC & Fixed`}
+												</Text>
+												<Text
+													className={`text-orange-700 dark:text-red-100 font-semibold text-sm`}
+												>
+													{`-${item.csc}`}
+												</Text>
+											</View>
 										</View>
-									</View>
-								) : (
-									<View className="flex flex-row gap-2">
-										<View
-											className={`${$theme ? "bg-red-800" : "bg-red-50"} items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-										>
-											<Text
-												className={`${$theme ? "text-red-100" : "text-red-700"} font-semibold text-sm`}
+									) : (
+										<View className="flex flex-row gap-2">
+											<View
+												className={`bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
 											>
-												{`CSC`}
-											</Text>
-											<Text
-												className={`${$theme ? "text-red-100" : "text-red-700"} font-semibold text-sm`}
-											>
-												{`-${item.csc}`}
-											</Text>
-										</View>
+												<Text
+													className={`text-red-700 dark:text-red-100 font-semibold text-sm`}
+												>
+													{`CSC`}
+												</Text>
+												<Text
+													className={`text-red-700 dark:text-red-100 font-semibold text-sm`}
+												>
+													{`-${item.csc}`}
+												</Text>
+											</View>
 
-										<View
-											className={`${$theme ? "bg-orange-800" : "bg-orange-50"} items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-										>
-											<Text
-												className={`${$theme ? "text-orange-100" : "text-orange-700"} font-semibold text-sm`}
+											<View
+												className={`bg-orange-50 dark:bg-oragne-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
 											>
-												{`Fixed`}
-											</Text>
-											<Text
-												className={`${$theme ? "text-orange-100" : "text-orange-700"} font-semibold text-sm`}
-											>
-												{`-${item.fixed}`}
-											</Text>
+												<Text
+													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
+												>
+													{`Fixed`}
+												</Text>
+												<Text
+													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
+												>
+													{`-${item.fixed}`}
+												</Text>
+											</View>
 										</View>
-									</View>
-								)}
+									)}
+								</View>
 							</View>
-						</View>
-					)
-				})}
+						)
+					})}
+				</View>
 			</ScrollView>
 		</View>
 	)
 }
-
-export default Information

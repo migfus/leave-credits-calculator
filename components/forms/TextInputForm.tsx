@@ -9,7 +9,6 @@ export default function TextInputForm({
 	onPressIn,
 	inputRef,
 	setValue,
-	theme,
 	noDot
 }: {
 	title: string
@@ -18,7 +17,6 @@ export default function TextInputForm({
 	onPressIn: () => void
 	inputRef?: React.RefObject<TextInput | null>
 	setValue: (text: string) => void
-	theme: boolean
 	noDot: boolean
 }) {
 	const endSelection = useMemo(
@@ -49,14 +47,10 @@ export default function TextInputForm({
 	}
 
 	function inputClass() {
-		if (selected && theme) {
-			return "border border-neutral-700 bg-neutral-900 text-brand-50"
-		} else if (selected) {
-			return "border border-neutral-300 bg-white"
-		} else if (theme) {
-			return "bg-neutral-800 text-neutral-100"
+		if (selected) {
+			return "border border-neutral-300 bg-white dark:border-neutral-700 dark:bg-neutral-900 dark:text-brand-50"
 		} else {
-			return "bg-neutral-100 text-neutral-900"
+			return "bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
 		}
 	}
 
@@ -83,9 +77,7 @@ export default function TextInputForm({
 	return (
 		<View className="flex flex-col flex-1 min-w-0">
 			<View className="px-2 pb-1 rounded-2xl flex justify-between flex-row">
-				<Text
-					className={`${theme ? "text-neutral-50" : "text-neutral-600"} text-sm font-semibold`}
-				>
+				<Text className={`text-neutral-600 dark:text-neutral-50 text-sm`}>
 					{title}
 				</Text>
 			</View>

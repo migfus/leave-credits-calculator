@@ -1,6 +1,4 @@
 import { Text, TouchableOpacity } from "react-native"
-import CopyIcon from "@/icons/copyIcon"
-import XIcon from "@/icons/xIcon"
 import {
 	BottomSheetModal,
 	BottomSheetModalProvider,
@@ -8,8 +6,14 @@ import {
 	BottomSheetView
 } from "@gorhom/bottom-sheet"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
-import CheckIcon from "@/icons/checkIcon"
-import CircleIcon from "@/icons/circleIcon"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import {
+	Cancel01Icon,
+	CheckmarkCircle04Icon,
+	CircleIcon,
+	Copy01Icon,
+	Notification03Icon
+} from "@hugeicons/core-free-icons"
 
 import React, { useCallback, useEffect, useRef } from "react"
 import useBottomSheetStore from "@/store/bottomSheetStore"
@@ -17,6 +21,7 @@ import { useThemeStore } from "@/store/themeStore"
 import * as Clipboard from "expo-clipboard"
 import { useVibrateStore } from "@/store/vibrateStore"
 import ActivitySection from "../others/ActivitySection"
+import { useColorScheme } from "nativewind"
 
 interface Props {
 	children: React.ReactNode
@@ -25,11 +30,11 @@ interface Props {
 const BottomSheetModalComponent = ({ children }: Props) => {
 	const $list_store = useBottomSheetStore((s) => s.list)
 	const $changeListStore = useBottomSheetStore((s) => s.changeList)
-	const bottomSheetModalRef = useRef<BottomSheetModal>(null)
-	const $theme = useThemeStore((s) => s.theme)
-	const $themeHydated = useThemeStore.persist.hasHydrated()
 	const $vibrate = useVibrateStore((s) => s.vibrate)
 	const $vibrateHydated = useVibrateStore.persist.hasHydrated()
+	const { colorScheme } = useColorScheme()
+
+	const bottomSheetModalRef = useRef<BottomSheetModal>(null)
 
 	const copyToClipboard = async (text: string) => {
 		$vibrate()
@@ -54,7 +59,7 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 		}
 	}, [$list_store, $vibrate])
 
-	if (!$themeHydated || !$vibrateHydated) {
+	if (!$vibrateHydated) {
 		return (
 			<ActivitySection title="Hydrating..." sub_title="Bottom Sheet Modal" />
 		)
@@ -71,16 +76,18 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 					onChange={handleSheetChanges}
 					enablePanDownToClose
 					backgroundStyle={{
-						backgroundColor: $theme
-							? "rgba(23, 23, 23, 0.95)"
-							: "rgba(245, 245, 245, 0.95)",
+						backgroundColor:
+							colorScheme === "dark"
+								? "rgba(23, 23, 23, 0.95)"
+								: "rgba(245, 245, 245, 0.95)",
 						borderTopLeftRadius: 24,
 						borderTopRightRadius: 24
 					}}
 					handleIndicatorStyle={{
-						backgroundColor: $theme
-							? "rgba(250, 250, 250, 0.35)"
-							: "rgba(10, 10, 10, 0.25)",
+						backgroundColor:
+							colorScheme === "dark"
+								? "rgba(250, 250, 250, 0.35)"
+								: "rgba(10, 10, 10, 0.25)",
 						width: 48
 					}}
 					backdropComponent={(props) => (
@@ -88,7 +95,7 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 							{...props}
 							appearsOnIndex={0}
 							disappearsOnIndex={-1}
-							opacity={$theme ? 0.55 : 0.35}
+							opacity={colorScheme === "dark" ? 0.55 : 0.35}
 						/>
 					)}
 				>
@@ -96,24 +103,28 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 						className="flex flex-col divide-y divide-gray-300"
 						style={{ paddingHorizontal: 24, paddingBottom: 40, paddingTop: 24 }}
 					>
-						{$list_store.map((item, index) =>
+						{$list_store.map((item, i) =>
 							item.type === "copy" ? (
 								<TouchableOpacity
-									key={index}
+									key={i}
 									onPress={() => copyToClipboard(item.link)}
 									className="flex flex-row justify-end gap-2 items-center mt-4"
 								>
 									<Text
-										className={`${$theme ? "text-neutral-300" : "text-neutral-600"} text-xl font-semibold`}
+										className={`text-neutral-600 dark:text-neutral-300 text-xl font-semibold`}
 									>
 										{item.name}
 									</Text>
 
-									<CopyIcon size={28} color={$theme ? "#cecece" : "#191919"} />
+									<HugeiconsIcon
+										icon={Copy01Icon}
+										strokeWidth={2}
+										className="text-neutral-600 dark:text-neutral-300"
+									/>
 								</TouchableOpacity>
 							) : item.type === "check" ? (
 								<TouchableOpacity
-									key={index}
+									key={i}
 									onPress={() => {
 										item.callback()
 										$vibrate()
@@ -121,26 +132,28 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 									className="flex flex-row justify-end gap-2 items-center mt-4"
 								>
 									<Text
-										className={`${$theme ? "text-neutral-300" : "text-neutral-600"} text-xl font-semibold`}
+										className={`text-neutral-600 dark:text-neutral-300 text-xl font-semibold`}
 									>
 										{item.name}
 									</Text>
 
 									{item.active ? (
-										<CheckIcon
-											size={28}
-											color={$theme ? "#b0b0b0" : "#191919"}
+										<HugeiconsIcon
+											icon={CheckmarkCircle04Icon}
+											strokeWidth={2}
+											className="text-neutral-600 dark:text-neutral-300"
 										/>
 									) : (
-										<CircleIcon
-											size={28}
-											color={$theme ? "#b0b0b0" : "#191919"}
+										<HugeiconsIcon
+											icon={CircleIcon}
+											strokeWidth={2}
+											className="text-neutral-600 dark:text-neutral-300"
 										/>
 									)}
 								</TouchableOpacity>
 							) : (
 								<TouchableOpacity
-									key={index}
+									key={i}
 									onPress={() => $changeListStore([])}
 									className="flex flex-row justify-end gap-2 items-center mt-4"
 								>
@@ -148,7 +161,11 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 										{item.name}
 									</Text>
 
-									<CopyIcon size={28} color={$theme ? "#cecece" : "#191919"} />
+									<HugeiconsIcon
+										icon={Copy01Icon}
+										strokeWidth={2}
+										className="text-neutral-600 dark:text-neutral-200"
+									/>
 								</TouchableOpacity>
 							)
 						)}
@@ -162,12 +179,16 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 							className="flex flex-row justify-end gap-2 items-center mb-6 mt-4"
 						>
 							<Text
-								className={`${$theme ? "text-red-400" : "text-red-600"} text-xl font-semibold `}
+								className={`text-red-600 dark:text-red-400 text-xl font-semibold `}
 							>
 								Close
 							</Text>
 
-							<XIcon size={28} color={$theme ? "#c96062" : "#b32329"} />
+							<HugeiconsIcon
+								icon={Cancel01Icon}
+								strokeWidth={2}
+								className="text-red-600 dark:text-red-400"
+							/>
 						</TouchableOpacity>
 					</BottomSheetView>
 				</BottomSheetModal>

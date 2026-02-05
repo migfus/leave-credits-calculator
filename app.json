@@ -1,59 +1,59 @@
 {
-  "expo": {
-    "name": "Leave Credits Balance Calculator",
-    "slug": "leave-credits-balance-calculator",
-    "version": "1.1.2",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "leavecreditsbalancecalculator",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "icon": "./assets/images/favicon.png",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
-      },
-      "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "package": "com.migfus.leavecreditsbalancecalculator"
-    },
-    "web": {
-      "output": "static",
-      "favicon": "./assets/images/favicon.png",
-      "bundler": "metro"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/favicon.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#46ecd5",
-          "dark": {
-            "backgroundColor": "#46ecd5"
-          }
-        }
-      ],
-      "expo-font"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
-    },
-    "extra": {
-      "version_message": "-Bug Fix\n-Optimizations\n-Added Haptic Feedback Control",
-      "router": {},
-      "eas": {
-        "projectId": "5f7f660f-e3f0-4737-9626-e24d8e06c605"
-      }
-    },
-    "owner": "migfus"
-  }
+	"expo": {
+		"name": "Leave Credits Balance Calculator",
+		"slug": "leave-credits-balance-calculator",
+		"version": "1.2.0",
+		"orientation": "portrait",
+		"icon": "./assets/images/icon.png",
+		"scheme": "leavecreditsbalancecalculator",
+		"userInterfaceStyle": "automatic",
+		"newArchEnabled": true,
+		"ios": {
+			"supportsTablet": true
+		},
+		"android": {
+			"icon": "./assets/images/favicon.png",
+			"adaptiveIcon": {
+				"foregroundImage": "./assets/images/android-icon-foreground.png",
+				"backgroundImage": "./assets/images/android-icon-background.png",
+				"monochromeImage": "./assets/images/android-icon-monochrome.png"
+			},
+			"edgeToEdgeEnabled": true,
+			"predictiveBackGestureEnabled": false,
+			"package": "com.migfus.leavecreditsbalancecalculator"
+		},
+		"web": {
+			"output": "static",
+			"favicon": "./assets/images/favicon.png",
+			"bundler": "metro"
+		},
+		"plugins": [
+			"expo-router",
+			[
+				"expo-splash-screen",
+				{
+					"image": "./assets/images/favicon.png",
+					"imageWidth": 200,
+					"resizeMode": "contain",
+					"backgroundColor": "#e5e5e5",
+					"dark": {
+						"backgroundColor": "#0a0a0a"
+					}
+				}
+			],
+			"expo-font"
+		],
+		"experiments": {
+			"typedRoutes": true,
+			"reactCompiler": true
+		},
+		"extra": {
+			"version_message": "- Added Intro Screens\n- Optimizations",
+			"router": {},
+			"eas": {
+				"projectId": "5f7f660f-e3f0-4737-9626-e24d8e06c605"
+			}
+		},
+		"owner": "migfus"
+	}
 }

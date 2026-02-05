@@ -1,38 +1,41 @@
-import ChevronDownIcon from "@/icons/chevronDownIcon"
-import GithubIcon from "@/icons/githubIcon"
-import TrelloIcon from "@/icons/trelloIcon"
 import {
+	ArrowDown01Icon,
+	ArrowReloadHorizontalIcon,
+	Github01Icon,
+	Navigation03Icon
+} from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import { useColorScheme } from "nativewind"
+import {
+	ActivityIndicator,
+	Alert,
 	Image,
+	Linking,
 	Switch,
 	Text,
-	TouchableOpacity,
-	View,
-	Linking,
 	TextInput,
-	Alert,
-	ActivityIndicator
+	TouchableOpacity,
+	View
 } from "react-native"
-import SendIcon from "@/icons/sendIcon"
 
-import { useThemeStore } from "@/store/themeStore"
-import React, { useCallback, useMemo, useState } from "react"
+import ActivitySection from "@/components/others/ActivitySection"
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import useComputationMethodStore from "@/store/computationMethodStore"
+import { useThemeStore } from "@/store/themeStore"
 import { useVibrateStore } from "@/store/vibrateStore"
 import Constants from "expo-constants"
-import ActivitySection from "@/components/others/ActivitySection"
+import React, { useCallback, useMemo, useState } from "react"
 
-const Settings = () => {
-	const $theme = useThemeStore((s) => s.theme)
+export default function Settings() {
 	const $vibrate_on = useVibrateStore((s) => s.vibrate_on)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
 	const $vibrateToggle = useVibrateStore((s) => s.toggleVibrate)
-	const $toggleTheme = useThemeStore((s) => s.toggleTheme)
 	const $changeList = useBottomSheetStore((s) => s.changeList)
 	const $computation_method = useComputationMethodStore((s) => s.method)
 	const $changeComputationMethod = useComputationMethodStore(
 		(s) => s.changeMethod
 	)
+	const { colorScheme, toggleColorScheme } = useColorScheme()
 
 	const $hydrated = [
 		useComputationMethodStore.persist.hasHydrated(),
@@ -99,25 +102,19 @@ const Settings = () => {
 	}
 
 	return (
-		<View className={$theme ? "bg-neutral-950" : "bg-neutral-200"}>
-			<View
-				className={`${$theme ? "bg-neutral-900" : "bg-white"} p-6  m-4 rounded-3xl flex flex-col justify-start gap-4`}
-			>
-				<View className={`flex flex-row justify-start gap-4`}>
+		<View className="bg-neutral-200 dark:bg-neutral-950">
+			<View className="bg-white dark:bg-neutral-900 p-6  m-4 rounded-3xl flex flex-col justify-start gap-4">
+				<View className="flex flex-row justify-start gap-4">
 					<Image
 						style={{ width: 50, height: 50, borderRadius: 10 }}
 						source={require("@/assets/images/favicon.png")}
 					></Image>
 
-					<View className="grow ">
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-brand-900"}  text-2xl font-semibold`}
-						>
-							Leave Credit Balance Calculator
+					<View className="flex-shrink">
+						<Text className="text-brand-900 dark:text-neutral-300 text-2xl font-semibold">
+							Leave Credits Balance Calculator
 						</Text>
-						<Text
-							className={`${$theme ? "text-neutral-400" : "text-neutral-500"} `}
-						>
+						<Text className="text-neutral-500 dark:text-neutral-400">
 							v{APP_VER}
 						</Text>
 					</View>
@@ -131,27 +128,29 @@ const Settings = () => {
 						onPress={() =>
 							Linking.openURL("https://trello.com/b/URHhZk2p/lcbc-app")
 						}
-						className={`${$theme ? "bg-neutral-800" : "bg-neutral-200"} flex flex-row gap-2  p-2 rounded-full px-4`}
+						className="bg-neutral-200 dark:bg-neutral-800 flex flex-row gap-2  p-2 rounded-full px-4"
 					>
-						<TrelloIcon color={$theme ? "#b0b0b0" : "#393939"} />
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-700"} font-semibold `}
-						>
+						<HugeiconsIcon
+							icon={ArrowReloadHorizontalIcon}
+							className="text-neutral-700 dark:text-neutral-300 "
+						/>
+						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold ">
 							App Updates
 						</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
-						className={`${$theme ? "bg-neutral-800" : "bg-neutral-200"} flex flex-row gap-2  p-2 rounded-full px-4`}
+						className="bg-neutral-200 dark:bg-neutral-800 flex flex-row gap-2 p-2 rounded-full px-4"
 						onPress={() =>
 							Linking.openURL(
 								"https://github.com/migfus/leave-balance-calculator"
 							)
 						}
 					>
-						<GithubIcon color={$theme ? "#b0b0b0" : "#393939"} />
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-700"} font-semibold `}
-						>
+						<HugeiconsIcon
+							icon={Github01Icon}
+							className="text-neutral-700 dark:text-neutral-300 "
+						/>
+						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold ">
 							Open Source
 						</Text>
 					</TouchableOpacity>
@@ -159,33 +158,25 @@ const Settings = () => {
 			</View>
 
 			<View className="mx-4 flex flex-col gap-2">
-				<TouchableOpacity
-					className={`${$theme ? "bg-neutral-900" : "bg-white"} rounded-t-3xl rounded-b-xl p-6 `}
-				>
+				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-t-3xl rounded-b-xl p-6 ">
 					<View className="flex flex-row justify-between items-center">
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-600"} font-semibold`}
-						>
+						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Dark Mode
 						</Text>
 
 						<Switch
-							value={$theme}
-							onValueChange={$toggleTheme}
+							value={colorScheme === "dark" ? true : false}
+							onValueChange={toggleColorScheme}
 							trackColor={{ false: "#ccc", true: "#4ade80" }}
-							thumbColor={$theme ? "#22c55e" : "#f4f4f5"}
+							thumbColor={colorScheme === "dark" ? "#22c55e" : "#f4f4f5"}
 							style={{ height: 32, width: 32 }}
 						/>
 					</View>
 				</TouchableOpacity>
 
-				<TouchableOpacity
-					className={`${$theme ? "bg-neutral-900" : "bg-white"} rounded-xl p-6 `}
-				>
+				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-xl p-6 ">
 					<View className="flex flex-row justify-between items-center">
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-600"} font-semibold`}
-						>
+						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Touch Feedback
 						</Text>
 
@@ -193,7 +184,7 @@ const Settings = () => {
 							value={$vibrate_on}
 							onValueChange={$vibrateToggle}
 							trackColor={{ false: "#ccc", true: "#4ade80" }}
-							thumbColor={$theme ? "#22c55e" : "#f4f4f5"}
+							thumbColor={colorScheme === "dark" ? "#22c55e" : "#f4f4f5"}
 							style={{ height: 32, width: 32 }}
 						/>
 					</View>
@@ -224,29 +215,26 @@ const Settings = () => {
 							}
 						])
 					}
-					className={`${$theme ? "bg-neutral-900" : "bg-white"} rounded-xl p-6 `}
+					className="bg-white dark:bg-neutral-900 rounded-xl p-6 "
 				>
 					<View className="flex flex-row justify-between items-center">
-						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-600"} font-semibold`}
-						>
+						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Computation Mode
 						</Text>
 
 						<View className="flex flex-row gap-2">
-							<Text
-								className={$theme ? "text-neutral-400" : "text-neutral-500"}
-							>
+							<Text className={"text-neutral-500 dark:text-neutral-400"}>
 								{$computation_method}
 							</Text>
-							<ChevronDownIcon color={$theme ? "#b0b0b0" : "#393939"} />
+							<HugeiconsIcon
+								icon={ArrowDown01Icon}
+								className="text-neutral-700 dark:text-neutral-300"
+							/>
 						</View>
 					</View>
 				</TouchableOpacity>
 
-				<View
-					className={`${$theme ? "bg-neutral-900" : "bg-white"} rounded-b-3xl rounded-t-xl p-6 `}
-				>
+				<View className="bg-white dark:bg-neutral-900 rounded-b-3xl rounded-t-xl p-6 ">
 					{sent_message ? (
 						<View>
 							<Text className="text-neutral-500">
@@ -255,22 +243,20 @@ const Settings = () => {
 						</View>
 					) : (
 						<View className="flex flex-col justify-between gap-2">
-							<Text
-								className={`${$theme ? "text-neutral-300" : "text-neutral-600"} font-semibold mb-2`}
-							>
+							<Text className="text-neutral-600 dark:text-neutral-300 font-semibold mb-2">
 								Suggest to Us
 							</Text>
 
-							<View
-								className={`${$theme ? "bg-neutral-700" : "bg-neutral-200"} rounded-3xl p-4`}
-							>
+							<View className="bg-neutral-200 dark:bg-neutral-700 rounded-3xl p-4">
 								<TextInput
-									className={`${$theme ? "text-neutral-300 accent-neutral-300" : "text-neutral-600"}`}
+									className="text-neutral-600 dark:text-neutral-300 dark:accent-neutral-300"
 									multiline
 									numberOfLines={4}
 									value={message}
 									placeholder="Message"
-									placeholderTextColor={$theme ? "#b0b0b0" : "#525252"}
+									placeholderTextColor={
+										colorScheme === "dark" ? "#b0b0b0" : "#525252"
+									}
 									onChangeText={setMessage}
 									onFocus={$vibrate}
 								/>
@@ -292,22 +278,16 @@ const Settings = () => {
 										disabled={isMessageEmpty}
 										className={`${
 											isMessageEmpty
-												? $theme
-													? "bg-neutral-900"
-													: "bg-white"
-												: $theme
-													? "bg-neutral-800"
-													: "bg-neutral-100"
-										} rounded-3xl p-4 items-end flex flex-row gap-2 `}
+												? "bg-white dark:bg-neutral-900"
+												: "bg-neutral-100 dark:bg-neutral-800"
+										} rounded-3xl p-4 items-end flex flex-row gap-2`}
 									>
-										<Text
-											className={`${$theme ? "text-neutral-300" : "text-neutral-700"} font-semibold `}
-										>
+										<Text className="text-neutral-700 dark:text-neutral-300 font-semibold ">
 											Send
 										</Text>
-										<SendIcon
-											color={$theme ? "#b0b0b0" : "#393939"}
-											size={20}
+										<HugeiconsIcon
+											icon={Navigation03Icon}
+											className="text-neutral-700 dark:text-neutral-300"
 										/>
 									</TouchableOpacity>
 								)}
@@ -321,5 +301,3 @@ const Settings = () => {
 		</View>
 	)
 }
-
-export default Settings

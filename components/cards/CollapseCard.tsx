@@ -1,10 +1,10 @@
 import { Linking, Text, TouchableOpacity, View } from "react-native"
-import ChevronDownIcon from "@/icons/chevronDownIcon"
-import MinusIcon from "@/icons/minusIcon"
 
 import React, { useState } from "react"
-import { useThemeStore } from "@/store/themeStore"
 import { useVibrateStore } from "@/store/vibrateStore"
+import ActivitySection from "../others/ActivitySection"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import { ArrowDown01Icon, MinusSignIcon } from "@hugeicons/core-free-icons"
 
 interface CollapseCardProps {
 	title: string
@@ -21,19 +21,22 @@ interface CollapseCardProps {
 
 const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 	const [collapse, setCollapse] = useState(false)
-	const $theme = useThemeStore((s) => s.theme)
-	const $peristTheme = useThemeStore.persist.hasHydrated()
 	const $vibrate = useVibrateStore((s) => s.vibrate)
 	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
 
-	if (!$peristTheme && !$vibrateHydrated) {
-		return
+	if (!$vibrateHydrated) {
+		return (
+			<ActivitySection
+				title="Collapse Card"
+				sub_title="components/CollapseCard"
+			/>
+		)
 	}
 
 	return (
-		<View className="flex flex-col gap-2">
+		<View className="flex flex-col gap-2 px-4">
 			<View
-				className={`${collapse ? "rounded-b-xl rounded-t-3xl" : "rounded-b-3xl rounded-t-3xl"} ${$theme ? "bg-neutral-900" : "bg-white"} p-6 flex flex-col gap-4`}
+				className={`${collapse ? "rounded-b-xl rounded-t-3xl" : "rounded-b-3xl rounded-t-3xl"} bg-white dark:bg-neutral-900 p-6 flex flex-col gap-4`}
 			>
 				<TouchableOpacity
 					onPress={() => {
@@ -42,24 +45,32 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 					}}
 					className="flex flex-row justify-between items-center"
 				>
-					<View className="flex flex-col gap-2">
+					<View className="flex-shrink">
 						<Text
-							className={`${$theme ? "text-neutral-300" : "text-neutral-700"} font-semibold text-xl text-wrap`}
+							className={`text-neutral-700 dark:text-neutral-300 font-semibold text-xl flex-shrink`}
 						>
 							{title}
 						</Text>
 						<Text
-							className={`${$theme ? "text-neutral-400" : "text-neutral-500"} text-wrap`}
+							className={`text-neutral-500 dark:text-neutral-400 text-wrap text-md flex-shrink`}
 						>
 							{sub_title}
 						</Text>
 					</View>
 
-					{collapse ? (
-						<MinusIcon color={$theme ? "#898989" : "#393939"} />
-					) : (
-						<ChevronDownIcon color={$theme ? "#898989" : "#393939"} />
-					)}
+					<View className="">
+						{collapse ? (
+							<HugeiconsIcon
+								className="text-neutral-500 dark:text-neutral-400"
+								icon={MinusSignIcon}
+							/>
+						) : (
+							<HugeiconsIcon
+								className="text-neutral-500 dark:text-neutral-400"
+								icon={ArrowDown01Icon}
+							/>
+						)}
+					</View>
 				</TouchableOpacity>
 			</View>
 
@@ -67,21 +78,21 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 				<></>
 			) : (
 				<View
-					className={`${$theme ? "bg-neutral-900" : "bg-white"} p-6 rounded-t-xl rounded-b-3xl flex flex-col gap-4`}
+					className={`bg-white dark:bg-neutral-900 p-6 rounded-t-xl rounded-b-3xl flex flex-col gap-4`}
 				>
 					<View className="flex flex-row justify-between items-center">
-						<View className="flex flex-col gap-2 flex-1 min-w-0">
+						<View className="grow flex-shrink">
 							<Text
 								numberOfLines={1}
 								ellipsizeMode="tail"
-								className={`${$theme ? "text-neutral-300" : "text-neutral-700"} font-semibold text-xl text-wrap flex-shrink`}
+								className={`text-neutral-700 dark:text-neutral-300 font-semibold text-xl text-wrap flex-shrink`}
 							>
 								{more_info.title}
 							</Text>
 							<Text
 								numberOfLines={2}
 								ellipsizeMode="tail"
-								className={`${$theme ? "text-neutral-400" : "text-neutral-500"} text-wrap flex-shrink`}
+								className={`text-neutral-500 dark:text-neutral-400 text-wrap flex-shrink`}
 							>
 								{more_info.sub_title}
 							</Text>
@@ -96,7 +107,7 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 							>
 								<TouchableOpacity
 									onPress={() => Linking.openURL(item.link)}
-									className={`${$theme ? "bg-brand-900" : "bg-brand-500"}  px-4 py-2 rounded-full`}
+									className={`bg-brand-500 dark:bg-brand-900  px-4 py-2 rounded-full`}
 								>
 									<Text className="text-brand-50">{item.name}</Text>
 								</TouchableOpacity>

@@ -1,7 +1,10 @@
-import BackIcon from "@/icons/backIcon"
-import FreshIcon from "@/icons/freshIcon"
-import XIcon from "@/icons/xIcon"
 import { Platform, Text, TouchableOpacity, View } from "react-native"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import {
+	Backward01Icon,
+	Cancel01Icon,
+	Refresh01Icon
+} from "@hugeicons/core-free-icons"
 
 import { LeaveBalanceHistory } from "@/globalInterface"
 import { useVibrateStore } from "@/store/vibrateStore"
@@ -9,7 +12,6 @@ import React, { useCallback, useEffect } from "react"
 import ActivitySection from "../others/ActivitySection"
 
 export default function KeypadCard({
-	theme,
 	select,
 	balance,
 	hours,
@@ -21,7 +23,6 @@ export default function KeypadCard({
 	setSelect,
 	onResetAll
 }: {
-	theme: boolean
 	select: string
 	balance: string
 	hours: string
@@ -150,10 +151,10 @@ export default function KeypadCard({
 
 	function getButtonClass(b: string) {
 		if (b === "Reset" && balance === "0") {
-			return theme ? "bg-neutral-950" : "bg-neutral-200"
+			return "bg-neutral-200 dark:bg-neutral-950"
 		}
 		if (b === "." && select !== "balance") {
-			return theme ? "bg-neutral-950" : "bg-neutral-200"
+			return "bg-neutral-200 dark:bg-neutral-950"
 		}
 		if (b === "Clear" || b === "Del") {
 			if (
@@ -161,15 +162,15 @@ export default function KeypadCard({
 				(select === "hours" && hours === "0") ||
 				(select === "minutes" && minutes === "0")
 			) {
-				return theme ? "bg-neutral-950" : "bg-neutral-200"
+				return "bg-neutral-200 dark:bg-neutral-950"
 			}
-			return theme ? "bg-neutral-800" : "bg-white"
+			return "bg-white dark:bg-neutral-800"
 		}
 		if (b === "+/-" && select !== "balance") {
-			return theme ? "bg-neutral-950" : "bg-neutral-200"
+			return "bg-neutral-200 dark:bg-neutral-950"
 		}
 
-		return theme ? "bg-neutral-800" : "bg-white"
+		return "bg-white dark:bg-neutral-800"
 	}
 
 	const rows = [
@@ -251,31 +252,40 @@ export default function KeypadCard({
 								className={buttonClass}
 							>
 								{b === "Del" ? (
-									<BackIcon size={26} />
+									<HugeiconsIcon
+										icon={Backward01Icon}
+										strokeWidth={2}
+										className="text-neutral-900 dark:text-neutral-50"
+									/>
 								) : b === "Clear" ? (
 									<View className="flex flex-row gap-2 items-center">
-										<XIcon size={26} color={theme ? "#cecece" : "#191919"} />
+										<HugeiconsIcon
+											icon={Cancel01Icon}
+											strokeWidth={2}
+											className="text-neutral-900 dark:text-neutral-50"
+										/>
 										<Text
-											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-xl `}
+											className={`text-neutral-900 dark:text-neutral-50 font-semibold text-xl `}
 										>
 											Clear
 										</Text>
 									</View>
 								) : b === "Reset" ? (
 									<View className="flex flex-row gap-2 items-center">
-										<FreshIcon
-											size={26}
-											color={theme ? "#cecece" : "#191919"}
+										<HugeiconsIcon
+											icon={Refresh01Icon}
+											strokeWidth={2}
+											className="text-neutral-900 dark:text-neutral-50"
 										/>
 										<Text
-											className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-xl `}
+											className={`text-neutral-900 dark:text-neutral-50 font-semibold text-xl `}
 										>
 											Reset
 										</Text>
 									</View>
 								) : (
 									<Text
-										className={`${theme ? "text-neutral-50" : "text-neutral-900"} font-semibold text-2xl `}
+										className={`text-neutral-900 dark:text-neutral-50 font-semibold text-2xl `}
 									>
 										{b}
 									</Text>

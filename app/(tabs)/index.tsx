@@ -6,7 +6,6 @@ import { TextInput, View } from "react-native"
 
 import ActivitySection from "@/components/others/ActivitySection"
 import { useLeaveHistory } from "@/store/historyStore"
-import { useThemeStore } from "@/store/themeStore"
 import React, { useRef, useState } from "react"
 import { useVibrateStore } from "@/store/vibrateStore"
 
@@ -22,12 +21,10 @@ export default function Index() {
 
 	const $history = useLeaveHistory((s) => s.history)
 	const $addHistory = useLeaveHistory((s) => s.addHistory)
-	const $theme = useThemeStore((s) => s.theme)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
 
 	const $hydrated = [
 		useVibrateStore.persist.hasHydrated(),
-		useThemeStore.persist.hasHydrated(),
 		useLeaveHistory.persist.hasHydrated()
 	]
 
@@ -38,18 +35,13 @@ export default function Index() {
 	return (
 		<View className="flex-1">
 			<View
-				className={`${$theme ? "bg-neutral-950" : "bg-neutral-200"} flex flex-col justify-between gap-4 p-4 h-full`}
+				className={`bg-neutral-200 dark:bg-neutral-950 flex flex-col justify-between gap-4 p-4 h-full`}
 			>
 				{/* SECTION: HISTORY PREVIEW CARD */}
-				<HistoryPreviewCard history={$history} theme={$theme} />
+				<HistoryPreviewCard history={$history} />
 
 				{/* SECTION: RESULT CARD */}
-				<ResultCard
-					balance={balance}
-					hours={hours}
-					minutes={minutes}
-					theme={$theme}
-				/>
+				<ResultCard balance={balance} hours={hours} minutes={minutes} />
 
 				{/* SECTION: INPUT FORM */}
 				<View className="flex flex-row gap-4">
@@ -62,10 +54,9 @@ export default function Index() {
 							setSelect("balance")
 							$vibrate()
 						}}
-						setValue={(value: string) => {
-							setBalance(value)
+						setValue={(v: string) => {
+							setBalance(v)
 						}}
-						theme={$theme}
 						noDot={false}
 					/>
 				</View>
@@ -80,8 +71,7 @@ export default function Index() {
 							setSelect("hours")
 							$vibrate()
 						}}
-						setValue={(value: string) => setHours(value)}
-						theme={$theme}
+						setValue={(v: string) => setHours(v)}
 						noDot={true}
 					/>
 					<TextInputForm
@@ -93,15 +83,13 @@ export default function Index() {
 							setSelect("minutes")
 							$vibrate()
 						}}
-						setValue={(value: string) => setMinutes(value)}
-						theme={$theme}
+						setValue={(v: string) => setMinutes(v)}
 						noDot={true}
 					/>
 				</View>
 
 				{/* SECTION: KEYPADCARD */}
 				<KeypadCard
-					theme={$theme}
 					select={select}
 					balance={balance}
 					hours={hours}

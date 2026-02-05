@@ -1,8 +1,4 @@
 import BottomSheetModalComponent from "@/components/bottom-sheet/BottomSheetModalComponent"
-import HistoryIcon from "@/icons/historyIcon"
-import HomeIcon from "@/icons/homeIcon"
-import InformationIcon from "@/icons/informationIcon"
-import SettingsIcon from "@/icons/settingsIcon"
 import { StatusBar } from "expo-status-bar"
 import { SafeAreaView } from "react-native-safe-area-context"
 import history from "./history"
@@ -11,21 +7,25 @@ import Information from "./information"
 import settings from "./settings"
 
 import ActivitySection from "@/components/others/ActivitySection"
-import { useThemeStore } from "@/store/themeStore"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import type { ComponentType } from "react"
 import { Platform, View } from "react-native"
 import { useVibrateStore } from "@/store/vibrateStore"
+import {
+	Clock02Icon,
+	Home01Icon,
+	InformationCircleIcon,
+	Settings01Icon
+} from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import { useColorScheme } from "nativewind"
 
 const Tab = createMaterialTopTabNavigator()
 
 export default function Layout() {
-	const $theme = useThemeStore((s) => s.theme)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
-	const $hydrated = [
-		useThemeStore.persist.hasHydrated(),
-		useVibrateStore.persist.hasHydrated()
-	]
+	const $hydrated = [useVibrateStore.persist.hasHydrated()]
+	const { colorScheme } = useColorScheme()
 
 	if ($hydrated.some((v) => v === false)) {
 		return <ActivitySection title="Hydrating..." sub_title="(tabs)/_layout" />
@@ -33,13 +33,11 @@ export default function Layout() {
 
 	return (
 		<BottomSheetModalComponent>
-			<SafeAreaView
-				className={`${$theme ? "bg-neutral-950" : "bg-neutral-200"} h-full`}
-			>
+			<SafeAreaView className="bg-neutral-200 dark:bg-neutral-950 h-full">
 				<Tab.Navigator
 					screenOptions={{
 						tabBarIndicatorStyle: {
-							backgroundColor: $theme ? "#223935" : "#d8efe8",
+							backgroundColor: colorScheme === "dark" ? "#223935" : "#d8efe8",
 							height: "100%",
 							borderRadius: 999
 						},
@@ -47,14 +45,16 @@ export default function Layout() {
 							padding: 0
 						},
 
-						tabBarActiveTintColor: $theme ? "#b4c5c0" : "#295049",
-						tabBarInactiveTintColor: $theme ? "#cacaca" : "#393939",
+						tabBarActiveTintColor:
+							colorScheme === "dark" ? "#b4c5c0" : "#295049",
+						tabBarInactiveTintColor:
+							colorScheme === "dark" ? "#cacaca" : "#393939",
 						tabBarStyle: {
 							marginTop: 8,
 							marginHorizontal: 12,
 							borderRadius: 999,
 							overflow: "hidden",
-							backgroundColor: $theme ? "#171717" : "#f5f5f5",
+							backgroundColor: colorScheme === "dark" ? "#171717" : "#f5f5f5",
 							...(Platform.OS === "android"
 								? { elevation: 10 }
 								: {
@@ -108,7 +108,7 @@ export default function Layout() {
 					})}
 				</Tab.Navigator>
 
-				<StatusBar style={$theme ? "light" : "dark"} />
+				<StatusBar style={colorScheme === "dark" ? "dark" : "light"} />
 			</SafeAreaView>
 		</BottomSheetModalComponent>
 	)
@@ -136,16 +136,32 @@ function TabScreen({
 			name={name}
 			component={component}
 			options={{
-				tabBarIcon: ({ color }) => (
+				tabBarIcon: () => (
 					<View style={{ height: "100%", justifyContent: "center" }}>
 						{icon === "home" ? (
-							<HomeIcon color={color} size={size} />
+							<HugeiconsIcon
+								icon={Home01Icon}
+								className="text-neutral-700 dark:text-neutral-100"
+								strokeWidth={2}
+							/>
 						) : icon === "history" ? (
-							<HistoryIcon color={color} size={size} />
+							<HugeiconsIcon
+								icon={Clock02Icon}
+								className="text-neutral-700 dark:text-neutral-100"
+								strokeWidth={2}
+							/>
 						) : icon === "information" ? (
-							<InformationIcon color={color} size={size} />
+							<HugeiconsIcon
+								icon={InformationCircleIcon}
+								className="text-neutral-700 dark:text-neutral-100"
+								strokeWidth={2}
+							/>
 						) : (
-							<SettingsIcon color={color} size={size} />
+							<HugeiconsIcon
+								icon={Settings01Icon}
+								className="text-neutral-700 dark:text-neutral-100"
+								strokeWidth={2}
+							/>
 						)}
 					</View>
 				),

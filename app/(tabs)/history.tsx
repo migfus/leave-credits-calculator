@@ -1,4 +1,3 @@
-import FreshIcon from "@/icons/freshIcon"
 import { FlatList, Text, TouchableOpacity, View } from "react-native"
 
 import { LeaveBalanceHistory } from "@/globalInterface"
@@ -10,15 +9,15 @@ import moment from "moment"
 import React, { useMemo, useState } from "react"
 import { useVibrateStore } from "@/store/vibrateStore"
 import ActivitySection from "@/components/others/ActivitySection"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import { Refresh01Icon } from "@hugeicons/core-free-icons"
 
 const HistoryCard = ({
 	history,
-	onPress,
-	theme
+	onPress
 }: {
 	history: LeaveBalanceHistory[]
 	onPress: () => void
-	theme: boolean
 }) => {
 	const filters = ["All", "Today", "This Week", "This Month", "This Year"]
 	const [selected_filter, setSelectedFilter] = useState("All")
@@ -66,17 +65,18 @@ const HistoryCard = ({
 			{history.length > 0 ? (
 				<TouchableOpacity
 					onPress={onPress}
-					className={`${theme ? "bg-neutral-900" : "bg-neutral-50"} px-4 pt-4 flex justify-between items-center flex-row p-4 rounded-full`}
+					className={`bg-neutral-50 dark:bg-neutral-900 px-4 pt-4 flex justify-between items-center flex-row p-4 rounded-full`}
 				>
-					<FreshIcon color={theme ? "#898989" : "#484848"} />
-					<Text
-						className={`${theme ? "text-neutral-300" : "text-neutral-600"}`}
-					>
+					<HugeiconsIcon
+						icon={Refresh01Icon}
+						className="bg-neutral-50 dark:bg-neutral-900"
+					/>
+					<Text className={`text-neutral-600 dark:text-neutral-300`}>
 						Clear History
 					</Text>
 
 					<Text
-						className={`${theme ? "text-neutral-400 bg-neutral-700" : "text-neutral-600 bg-neutral-200"} px-2 rounded-full  text-sm`}
+						className={`text-neutral-600 bg-neutral-200 dark:text-neutral-400 dark:bg-neutral-700 px-2 rounded-full  text-sm`}
 					>
 						{history.length}
 					</Text>
@@ -95,10 +95,10 @@ const HistoryCard = ({
 					renderItem={({ item }) =>
 						selected_filter === item ? (
 							<View
-								className={`${theme ? "bg-brand-900" : "bg-brand-200"} "flex flex-row justify-between py-2 px-4 rounded-full`}
+								className={`bg-brand-200 dark:bg-brand-900 flex flex-row justify-between py-2 px-4 rounded-full`}
 							>
 								<Text
-									className={`${theme ? "text-brand-100" : "text-brand-700"} text-md font-semibold`}
+									className={`text-brand-700 dark:text-brand-100 text-md font-semibold`}
 								>
 									{item}
 								</Text>
@@ -109,10 +109,10 @@ const HistoryCard = ({
 									setSelectedFilter(item)
 									$vibrate()
 								}}
-								className={`${theme ? "bg-neutral-900" : "bg-white"} "flex flex-row justify-between py-2 px-4 rounded-full`}
+								className={`bg-white dark:bg-neutral-900 flex flex-row justify-between py-2 px-4 rounded-full`}
 							>
 								<Text
-									className={`${theme ? "text-neutral-400" : "text-neutral-600"} text-md font-semibold`}
+									className={`text-neutral-600 dark:text-neutral-400 text-md font-semibold`}
 								>
 									{item}
 								</Text>
@@ -122,10 +122,10 @@ const HistoryCard = ({
 				></FlatList>
 				{newestFirstHistory.length === 0 && (
 					<View
-						className={`${theme ? "bg-neutral-900" : "bg-white"} flex flex-col items-center justify-center  rounded-full p-6 mt-8`}
+						className={`bg-white dark:bg-neutral-900 flex flex-col items-center justify-center  rounded-full p-6 mt-8`}
 					>
 						<Text
-							className={`${theme ? "text-neutral-400" : "text-neutral-600"} text-center `}
+							className={`text-neutral-600 dark:text-neutral-400 text-center `}
 						>
 							Empty
 						</Text>
@@ -166,10 +166,10 @@ const HistoryCard = ({
 										}
 									])
 								}
-								className={`${theme ? "bg-neutral-900" : "bg-white"} ${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === newestFirstHistory.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} flex flex-row justify-between  p-4 rounded-3xl`}
+								className={`bg-white dark:bg-neutral-900 ${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === newestFirstHistory.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} flex flex-row justify-between  p-4 rounded-3xl`}
 							>
 								<Text
-									className={`${theme ? "text-neutral-400" : "text-neutral-600"} text-xs`}
+									className={`text-neutral-600 dark:text-neutral-400 text-xs`}
 								>
 									{messengerStyleTime(item.timeStamps)}
 								</Text>
@@ -179,55 +179,55 @@ const HistoryCard = ({
 										<View className="flex flex-row items-end gap-1 justify-end ">
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-md font-semibold`}
+												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
 											>
 												{`${item.balance}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-700"} text-sm`}
+												className={`text-neutral-700 dark:text-neutral-400 text-sm`}
 											>
 												{`old bal `}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-md font-semibold`}
+												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
 											>
 												{`-`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-md font-semibold`}
+												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
 											>
 												{`${item.hours}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-sm`}
+												className={`text-neutral-800 dark:text-neutral-400 text-sm`}
 											>
 												{`hr `}
 											</Text>
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-md font-semibold`}
+												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
 											>
 												{`${item.minutes}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-sm`}
+												className={`text-neutral-800 dark:text-neutral-400 text-sm`}
 											>
 												{`min `}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`${theme ? "text-neutral-400" : "text-neutral-800"} text-md font-semibold`}
+												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
 											>
 												{`= `}
 											</Text>
@@ -237,11 +237,11 @@ const HistoryCard = ({
 									<View className="flex flex-row justify-end gap-2 items-center">
 										<Text
 											numberOfLines={1}
-											className={`${theme ? "bg-red-900 text-red-100" : "bg-red-100 text-red-700"} text-xl font-semibold rounded-full px-4 py-1`}
+											className={`bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 text-xl font-semibold rounded-full px-4 py-1`}
 										>{`-${computed[0]} `}</Text>
 										<Text
 											numberOfLines={1}
-											className={`${theme ? "bg-brand-900 text-brand-50" : "bg-brand-100 text-brand-700"} text-2xl font-semibold rounded-full px-4 py-1`}
+											className={`bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-50 text-2xl font-semibold rounded-full px-4 py-1`}
 										>{`${computed[1]} `}</Text>
 									</View>
 								</View>
@@ -258,12 +258,8 @@ export default function History() {
 	const $history = useLeaveHistory((s) => s.history)
 	const $resetHistory = useLeaveHistory((s) => s.reset)
 
-	const theme = useThemeStore((s) => s.theme)
 	const $changeList = useBottomSheetStore((s) => s.changeList)
-	const $hydrated = [
-		useThemeStore.persist.hasHydrated(),
-		useLeaveHistory.persist.hasHydrated()
-	]
+	const $hydrated = [useLeaveHistory.persist.hasHydrated()]
 
 	function clearHistory() {
 		$resetHistory()
@@ -274,9 +270,7 @@ export default function History() {
 	}
 
 	return (
-		<View
-			className={`${theme ? "bg-neutral-950" : "bg-neutral-200"} flex-1 gap-4 p-4`}
-		>
+		<View className={`bg-neutral-200 dark:bg-neutral-950 flex-1 gap-4 p-4`}>
 			<HistoryCard
 				history={$history}
 				onPress={() =>
@@ -293,7 +287,6 @@ export default function History() {
 						}
 					])
 				}
-				theme={theme}
 			/>
 		</View>
 	)
