@@ -108,7 +108,7 @@ export default function Layout() {
 					})}
 				</Tab.Navigator>
 
-				<StatusBar style={colorScheme === "dark" ? "dark" : "light"} />
+				<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
 			</SafeAreaView>
 		</BottomSheetModalComponent>
 	)
@@ -127,7 +127,6 @@ function TabScreen({
 	name,
 	component,
 	icon,
-	size = 28,
 	padding = 16,
 	onTabPress
 }: TabScreenProps) {

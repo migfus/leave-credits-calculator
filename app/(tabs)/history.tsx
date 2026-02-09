@@ -2,7 +2,6 @@ import { FlatList, Text, TouchableOpacity, View } from "react-native"
 
 import { LeaveBalanceHistory } from "@/globalInterface"
 import { useLeaveHistory } from "@/store/historyStore"
-import { useThemeStore } from "@/store/themeStore"
 import { leaveBalanceComputation, messengerStyleTime } from "@/utils"
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import moment from "moment"
@@ -65,19 +64,18 @@ const HistoryCard = ({
 			{history.length > 0 ? (
 				<TouchableOpacity
 					onPress={onPress}
-					className={`bg-neutral-50 dark:bg-neutral-900 px-4 pt-4 flex justify-between items-center flex-row p-4 rounded-full`}
+					className="bg-neutral-50 dark:bg-neutral-900 px-4 pt-4 flex justify-between items-center flex-row p-4 rounded-full"
 				>
 					<HugeiconsIcon
 						icon={Refresh01Icon}
-						className="bg-neutral-50 dark:bg-neutral-900"
+						strokeWidth={2}
+						className="text-neutral-600 dark:text-neutral-300 size-5"
 					/>
-					<Text className={`text-neutral-600 dark:text-neutral-300`}>
+					<Text className="text-neutral-600 dark:text-neutral-300">
 						Clear History
 					</Text>
 
-					<Text
-						className={`text-neutral-600 bg-neutral-200 dark:text-neutral-400 dark:bg-neutral-700 px-2 rounded-full  text-sm`}
-					>
+					<Text className="text-neutral-600 bg-neutral-200 dark:text-neutral-300 dark:bg-neutral-700 px-2 rounded-full text-sm">
 						{history.length}
 					</Text>
 				</TouchableOpacity>
@@ -94,12 +92,8 @@ const HistoryCard = ({
 					horizontal
 					renderItem={({ item }) =>
 						selected_filter === item ? (
-							<View
-								className={`bg-brand-200 dark:bg-brand-900 flex flex-row justify-between py-2 px-4 rounded-full`}
-							>
-								<Text
-									className={`text-brand-700 dark:text-brand-100 text-md font-semibold`}
-								>
+							<View className="bg-brand-200 dark:bg-brand-900 flex flex-row justify-between py-2 px-4 rounded-full">
+								<Text className="text-brand-700 dark:text-brand-100 text-md font-semibold">
 									{item}
 								</Text>
 							</View>
@@ -109,11 +103,9 @@ const HistoryCard = ({
 									setSelectedFilter(item)
 									$vibrate()
 								}}
-								className={`bg-white dark:bg-neutral-900 flex flex-row justify-between py-2 px-4 rounded-full`}
+								className="bg-white dark:bg-neutral-900 flex flex-row justify-between py-2 px-4 rounded-full"
 							>
-								<Text
-									className={`text-neutral-600 dark:text-neutral-400 text-md font-semibold`}
-								>
+								<Text className="text-neutral-600 dark:text-neutral-400 text-md font-semibold">
 									{item}
 								</Text>
 							</TouchableOpacity>
@@ -121,12 +113,8 @@ const HistoryCard = ({
 					}
 				></FlatList>
 				{newestFirstHistory.length === 0 && (
-					<View
-						className={`bg-white dark:bg-neutral-900 flex flex-col items-center justify-center  rounded-full p-6 mt-8`}
-					>
-						<Text
-							className={`text-neutral-600 dark:text-neutral-400 text-center `}
-						>
+					<View className="bg-white dark:bg-neutral-900 flex flex-col items-center justify-center  rounded-full p-6 mt-8">
+						<Text className="text-neutral-600 dark:text-neutral-400 text-center">
 							Empty
 						</Text>
 					</View>
@@ -169,65 +157,66 @@ const HistoryCard = ({
 								className={`bg-white dark:bg-neutral-900 ${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === newestFirstHistory.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} flex flex-row justify-between  p-4 rounded-3xl`}
 							>
 								<Text
-									className={`text-neutral-600 dark:text-neutral-400 text-xs`}
+									className="
+                                    text-neutral-600 dark:text-neutral-400 text-xs"
 								>
 									{messengerStyleTime(item.timeStamps)}
 								</Text>
 
-								<View className={`flex flex-col gap-2`}>
-									<View className="flex flex-row items-end justify-end gap-1 ">
-										<View className="flex flex-row items-end gap-1 justify-end ">
+								<View className="flex flex-col gap-2">
+									<View className="flex flex-row items-end justify-end gap-1">
+										<View className="flex flex-row items-end gap-1 justify-end">
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 											>
 												{`${item.balance}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-700 dark:text-neutral-400 text-sm`}
+												className="text-neutral-700 dark:text-neutral-400 text-sm"
 											>
 												{`old bal `}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 											>
 												{`-`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 											>
 												{`${item.hours}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-sm`}
+												className="text-neutral-800 dark:text-neutral-400 text-sm"
 											>
 												{`hr `}
 											</Text>
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 											>
 												{`${item.minutes}`}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-sm`}
+												className="text-neutral-800 dark:text-neutral-400 text-sm"
 											>
 												{`min `}
 											</Text>
 
 											<Text
 												numberOfLines={1}
-												className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 											>
 												{`= `}
 											</Text>
@@ -237,11 +226,11 @@ const HistoryCard = ({
 									<View className="flex flex-row justify-end gap-2 items-center">
 										<Text
 											numberOfLines={1}
-											className={`bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 text-xl font-semibold rounded-full px-4 py-1`}
+											className="bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 text-xl font-semibold rounded-full px-4 py-1"
 										>{`-${computed[0]} `}</Text>
 										<Text
 											numberOfLines={1}
-											className={`bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-50 text-2xl font-semibold rounded-full px-4 py-1`}
+											className="bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-50 text-2xl font-semibold rounded-full px-4 py-1"
 										>{`${computed[1]} `}</Text>
 									</View>
 								</View>

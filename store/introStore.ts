@@ -1,28 +1,25 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { create } from "zustand"
 import { createJSONStorage, persist } from "zustand/middleware"
-import { useVibrateStore } from "./vibrateStore"
 
-interface ThemeStore {
-	theme: boolean
-	toggleTheme: () => void
+interface IntroStore {
+	show_intro: boolean
+	removeIntro: () => void
 }
 
-export const useThemeStore = create<ThemeStore>()(
+export const useIntroStore = create<IntroStore>()(
 	persist(
 		(set, get) => ({
-			theme: true,
-			toggleTheme: () => {
-				set({ theme: !get().theme })
-				// Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-				// useVibrateStore.getState().vibrate()
+			show_intro: true,
+			removeIntro: () => {
+				set({ show_intro: !get().show_intro })
 			}
 		}),
 		{
-			name: "theme",
+			name: "intro",
 			storage: createJSONStorage(() => AsyncStorage, {
 				reviver: (key, value) => {
-					if (key === "theme") {
+					if (key === "intro") {
 						return value === true || value === "true"
 					}
 					return value

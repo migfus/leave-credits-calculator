@@ -19,7 +19,11 @@ interface CollapseCardProps {
 	}
 }
 
-const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
+export default function CollapseCard({
+	title,
+	sub_title,
+	more_info
+}: CollapseCardProps) {
 	const [collapse, setCollapse] = useState(false)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
 	const $vibrateHydrated = useVibrateStore.persist.hasHydrated()
@@ -46,14 +50,10 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 					className="flex flex-row justify-between items-center"
 				>
 					<View className="flex-shrink">
-						<Text
-							className={`text-neutral-700 dark:text-neutral-300 font-semibold text-xl flex-shrink`}
-						>
+						<Text className="first-letter:text-neutral-700 dark:text-neutral-300 font-semibold text-xl flex-shrink">
 							{title}
 						</Text>
-						<Text
-							className={`text-neutral-500 dark:text-neutral-400 text-wrap text-md flex-shrink`}
-						>
+						<Text className="text-neutral-500 dark:text-neutral-400 text-wrap text-md flex-shrink">
 							{sub_title}
 						</Text>
 					</View>
@@ -77,22 +77,20 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 			{!collapse ? (
 				<></>
 			) : (
-				<View
-					className={`bg-white dark:bg-neutral-900 p-6 rounded-t-xl rounded-b-3xl flex flex-col gap-4`}
-				>
+				<View className="bg-white dark:bg-neutral-900 p-6 rounded-t-xl rounded-b-3xl flex flex-col gap-4">
 					<View className="flex flex-row justify-between items-center">
 						<View className="grow flex-shrink">
 							<Text
 								numberOfLines={1}
 								ellipsizeMode="tail"
-								className={`text-neutral-700 dark:text-neutral-300 font-semibold text-xl text-wrap flex-shrink`}
+								className="text-neutral-700 dark:text-neutral-300 font-semibold text-xl text-wrap flex-shrink"
 							>
 								{more_info.title}
 							</Text>
 							<Text
 								numberOfLines={2}
 								ellipsizeMode="tail"
-								className={`text-neutral-500 dark:text-neutral-400 text-wrap flex-shrink`}
+								className="text-neutral-500 dark:text-neutral-400 text-wrap flex-shrink"
 							>
 								{more_info.sub_title}
 							</Text>
@@ -107,7 +105,7 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 							>
 								<TouchableOpacity
 									onPress={() => Linking.openURL(item.link)}
-									className={`bg-brand-500 dark:bg-brand-900  px-4 py-2 rounded-full`}
+									className="bg-brand-500 dark:bg-brand-900  px-4 py-2 rounded-full"
 								>
 									<Text className="text-brand-50">{item.name}</Text>
 								</TouchableOpacity>
@@ -121,5 +119,3 @@ const CollapseCard = ({ title, sub_title, more_info }: CollapseCardProps) => {
 		</View>
 	)
 }
-
-export default CollapseCard

@@ -77,7 +77,7 @@ export default function TextInputForm({
 	return (
 		<View className="flex flex-col flex-1 min-w-0">
 			<View className="px-2 pb-1 rounded-2xl flex justify-between flex-row">
-				<Text className={`text-neutral-600 dark:text-neutral-50 text-sm`}>
+				<Text className="text-neutral-600 dark:text-neutral-50 text-sm">
 					{title}
 				</Text>
 			</View>

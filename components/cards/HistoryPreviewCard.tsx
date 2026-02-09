@@ -7,11 +7,11 @@ import { HugeiconsIcon } from "@hugeicons/react-native"
 import { Clock03Icon } from "@hugeicons/core-free-icons"
 import { router } from "expo-router"
 
-const HistoryPreviewCard = ({
+export default function HistoryPreviewCard({
 	history
 }: {
 	history: LeaveBalanceHistory[]
-}) => {
+}) {
 	const flatListRef = useRef<FlatList>(null)
 
 	// Auto-scroll to bottom when history updates
@@ -22,12 +22,10 @@ const HistoryPreviewCard = ({
 	}, [history])
 
 	return (
-		<View
-			className={`bg-neutral-50 drak:bg-neutral-900 rounded-3xl flex flex-1 p-1`}
-		>
+		<View className="bg-neutral-50 dark:bg-neutral-900 rounded-3xl flex flex-1 p-1">
 			<TouchableOpacity
 				onPress={() => router.push("/history")}
-				className="p-4 rounded-2xl flex justify-between flex-row items-center "
+				className="p-4 rounded-2xl flex justify-between flex-row items-center"
 			>
 				<View className="flex flex-row gap-2 items-center">
 					<HugeiconsIcon
@@ -35,14 +33,12 @@ const HistoryPreviewCard = ({
 						strokeWidth={2}
 						className="text-neutral-600 dark:text-neutral-400 size-5"
 					/>
-					<Text className={`text-neutral-600 dark:text-neutral-400 text-sm`}>
+					<Text className="text-neutral-600 dark:text-neutral-400 text-sm">
 						History
 					</Text>
 				</View>
 
-				<Text
-					className={`text-neutral-600 bg-neutral-200 dark:text-neutral-200 dark:bg-neutral-800 px-2 rounded-full py-1 text-xs`}
-				>
+				<Text className="text-neutral-600 bg-neutral-200 dark:text-neutral-200 dark:bg-neutral-700 px-2 rounded-full py-1 text-xs">
 					{history.length}
 				</Text>
 			</TouchableOpacity>
@@ -56,9 +52,7 @@ const HistoryPreviewCard = ({
 					contentContainerStyle={{ gap: 8 }}
 					renderItem={({ item }) => (
 						<View className="flex flex-row justify-between items-center">
-							<Text
-								className={`text-neutral-600 dark:text-neutral-500 text-xs`}
-							>
+							<Text className="text-neutral-600 dark:text-neutral-500 text-xs">
 								{messengerStyleTime(item.timeStamps)}
 							</Text>
 							<View className="flex flex-row justify-end gap-4 items-center">
@@ -66,48 +60,48 @@ const HistoryPreviewCard = ({
 									<View className="flex flex-row items-end gap-1 min-w-[8rem] justify-end">
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neural-400 text-md font-semibold`}
+											className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 										>
 											{`${item.balance} `}
 										</Text>
 
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-700 dark:text-neutral-400 text-xs`}
+											className="text-neutral-700 dark:text-neutral-400 text-xs"
 										>
 											{`old bal `}
 										</Text>
 
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+											className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 										>
 											{`- `}
 										</Text>
 
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+											className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 										>
 											{`${item.hours}`}
 										</Text>
 
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neutral-400 text-xs `}
+											className="text-neutral-800 dark:text-neutral-400 text-xs"
 										>
 											{`hr `}
 										</Text>
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neutral-400 text-md font-semibold`}
+											className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
 										>
 											{`${item.minutes}`}
 										</Text>
 
 										<Text
 											numberOfLines={1}
-											className={`text-neutral-800 dark:text-neutral-400 text-xs`}
+											className="text-neutral-800 dark:text-neutral-400 text-xs"
 										>
 											{`min `}
 										</Text>
@@ -117,7 +111,7 @@ const HistoryPreviewCard = ({
 								<View className="flex flex-row min-w-[6rem] justify-end">
 									<Text
 										numberOfLines={1}
-										className={`text-brand-800 bg-brand-100 dark:text-brand-100 dark:bg-brand-900 font-semibold text-right text-xl px-2 py-1 rounded-full`}
+										className="text-brand-800 bg-brand-100 dark:text-brand-100 dark:bg-brand-900 font-semibold text-right text-xl px-2 py-1 rounded-full"
 									>{`${leaveBalanceComputation(item)[1]} `}</Text>
 								</View>
 							</View>
@@ -128,5 +122,3 @@ const HistoryPreviewCard = ({
 		</View>
 	)
 }
-
-export default HistoryPreviewCard

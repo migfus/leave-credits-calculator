@@ -34,9 +34,7 @@ export default function Index() {
 
 	return (
 		<View className="flex-1">
-			<View
-				className={`bg-neutral-200 dark:bg-neutral-950 flex flex-col justify-between gap-4 p-4 h-full`}
-			>
+			<View className="bg-neutral-200 dark:bg-neutral-950 flex flex-col justify-between gap-4 p-4 h-full">
 				{/* SECTION: HISTORY PREVIEW CARD */}
 				<HistoryPreviewCard history={$history} />
 

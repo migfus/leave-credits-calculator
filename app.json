@@ -48,7 +48,7 @@
 			"reactCompiler": true
 		},
 		"extra": {
-			"version_message": "- Added Intro Screens\n- Optimizations",
+			"version_message": "- Added Intro Screens\n- Overhaul dark mode & icons\n- Optimizations",
 			"router": {},
 			"eas": {
 				"projectId": "5f7f660f-e3f0-4737-9626-e24d8e06c605"

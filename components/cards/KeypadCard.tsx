@@ -220,7 +220,6 @@ export default function KeypadCard({
 
 		window.addEventListener("keydown", handler)
 		return () => window.removeEventListener("keydown", handler)
-		// Intentionally depend on state/handlers so selected field stays correct.
 	}, [append, clear, del, reset])
 
 	if (!$vibrateHydrated) {
@@ -242,7 +241,7 @@ export default function KeypadCard({
 							else append(b)
 						}
 
-						const buttonClass = `${getButtonClass(b)} rounded-2xl justify-center items-center flex-1 h-[4rem] `
+						const buttonClass = `${getButtonClass(b)} rounded-2xl justify-center items-center flex-1 h-[4rem]`
 
 						return (
 							<TouchableOpacity
@@ -264,9 +263,7 @@ export default function KeypadCard({
 											strokeWidth={2}
 											className="text-neutral-900 dark:text-neutral-50"
 										/>
-										<Text
-											className={`text-neutral-900 dark:text-neutral-50 font-semibold text-xl `}
-										>
+										<Text className="text-neutral-900 dark:text-neutral-50 font-semibold text-xl">
 											Clear
 										</Text>
 									</View>
@@ -277,16 +274,12 @@ export default function KeypadCard({
 											strokeWidth={2}
 											className="text-neutral-900 dark:text-neutral-50"
 										/>
-										<Text
-											className={`text-neutral-900 dark:text-neutral-50 font-semibold text-xl `}
-										>
+										<Text className="text-neutral-900 dark:text-neutral-50 font-semibold text-xl">
 											Reset
 										</Text>
 									</View>
 								) : (
-									<Text
-										className={`text-neutral-900 dark:text-neutral-50 font-semibold text-2xl `}
-									>
+									<Text className="text-neutral-900 dark:text-neutral-50 font-semibold text-2xl">
 										{b}
 									</Text>
 								)}

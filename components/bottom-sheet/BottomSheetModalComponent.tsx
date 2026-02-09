@@ -1,33 +1,31 @@
-import { Text, TouchableOpacity } from "react-native"
 import {
+	BottomSheetBackdrop,
 	BottomSheetModal,
 	BottomSheetModalProvider,
-	BottomSheetBackdrop,
 	BottomSheetView
 } from "@gorhom/bottom-sheet"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { HugeiconsIcon } from "@hugeicons/react-native"
 import {
 	Cancel01Icon,
 	CheckmarkCircle04Icon,
 	CircleIcon,
-	Copy01Icon,
-	Notification03Icon
+	Copy01Icon
 } from "@hugeicons/core-free-icons"
+import { HugeiconsIcon } from "@hugeicons/react-native"
+import { Text, TouchableOpacity } from "react-native"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
 
-import React, { useCallback, useEffect, useRef } from "react"
 import useBottomSheetStore from "@/store/bottomSheetStore"
-import { useThemeStore } from "@/store/themeStore"
-import * as Clipboard from "expo-clipboard"
 import { useVibrateStore } from "@/store/vibrateStore"
-import ActivitySection from "../others/ActivitySection"
+import * as Clipboard from "expo-clipboard"
 import { useColorScheme } from "nativewind"
+import React, { useCallback, useEffect, useRef } from "react"
+import ActivitySection from "../others/ActivitySection"
 
-interface Props {
+export default function BottomSheetModalComponent({
+	children
+}: {
 	children: React.ReactNode
-}
-
-const BottomSheetModalComponent = ({ children }: Props) => {
+}) {
 	const $list_store = useBottomSheetStore((s) => s.list)
 	const $changeListStore = useBottomSheetStore((s) => s.changeList)
 	const $vibrate = useVibrateStore((s) => s.vibrate)
@@ -70,7 +68,6 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 			<BottomSheetModalProvider>
 				{children}
 
-				{/* Keep the modal mounted separately from the main view */}
 				<BottomSheetModal
 					ref={bottomSheetModalRef}
 					onChange={handleSheetChanges}
@@ -110,9 +107,7 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 									onPress={() => copyToClipboard(item.link)}
 									className="flex flex-row justify-end gap-2 items-center mt-4"
 								>
-									<Text
-										className={`text-neutral-600 dark:text-neutral-300 text-xl font-semibold`}
-									>
+									<Text className="text-neutral-600 dark:text-neutral-300 text-xl font-semibold">
 										{item.name}
 									</Text>
 
@@ -131,24 +126,28 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 									}}
 									className="flex flex-row justify-end gap-2 items-center mt-4"
 								>
-									<Text
-										className={`text-neutral-600 dark:text-neutral-300 text-xl font-semibold`}
-									>
-										{item.name}
-									</Text>
-
 									{item.active ? (
-										<HugeiconsIcon
-											icon={CheckmarkCircle04Icon}
-											strokeWidth={2}
-											className="text-neutral-600 dark:text-neutral-300"
-										/>
+										<>
+											<Text className="text-neutral-600 dark:text-neutral-300 text-xl font-semibold">
+												{item.name}
+											</Text>
+											<HugeiconsIcon
+												icon={CheckmarkCircle04Icon}
+												strokeWidth={2}
+												className="text-neutral-600 dark:text-neutral-300"
+											/>
+										</>
 									) : (
-										<HugeiconsIcon
-											icon={CircleIcon}
-											strokeWidth={2}
-											className="text-neutral-600 dark:text-neutral-300"
-										/>
+										<>
+											<Text className="text-neutral-500 dark:text-neutral-400 text-xl font-semibold">
+												{item.name}
+											</Text>
+											<HugeiconsIcon
+												icon={CircleIcon}
+												strokeWidth={2}
+												className="text-neutral-500 dark:text-neutral-400"
+											/>
+										</>
 									)}
 								</TouchableOpacity>
 							) : (
@@ -178,9 +177,7 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 							}}
 							className="flex flex-row justify-end gap-2 items-center mb-6 mt-4"
 						>
-							<Text
-								className={`text-red-600 dark:text-red-400 text-xl font-semibold `}
-							>
+							<Text className="text-red-600 dark:text-red-400 text-xl font-semibold">
 								Close
 							</Text>
 
@@ -196,5 +193,3 @@ const BottomSheetModalComponent = ({ children }: Props) => {
 		</GestureHandlerRootView>
 	)
 }
-
-export default BottomSheetModalComponent

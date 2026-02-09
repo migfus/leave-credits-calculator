@@ -21,7 +21,6 @@ import {
 import ActivitySection from "@/components/others/ActivitySection"
 import useBottomSheetStore from "@/store/bottomSheetStore"
 import useComputationMethodStore from "@/store/computationMethodStore"
-import { useThemeStore } from "@/store/themeStore"
 import { useVibrateStore } from "@/store/vibrateStore"
 import Constants from "expo-constants"
 import React, { useCallback, useMemo, useState } from "react"
@@ -39,8 +38,7 @@ export default function Settings() {
 
 	const $hydrated = [
 		useComputationMethodStore.persist.hasHydrated(),
-		useVibrateStore.persist.hasHydrated(),
-		useThemeStore.persist.hasHydrated()
+		useVibrateStore.persist.hasHydrated()
 	]
 
 	const APP_VER = Constants.expoConfig?.version ?? ""
@@ -128,13 +126,13 @@ export default function Settings() {
 						onPress={() =>
 							Linking.openURL("https://trello.com/b/URHhZk2p/lcbc-app")
 						}
-						className="bg-neutral-200 dark:bg-neutral-800 flex flex-row gap-2  p-2 rounded-full px-4"
+						className="bg-neutral-200 dark:bg-neutral-800 flex flex-row gap-2 p-2 rounded-full px-4"
 					>
 						<HugeiconsIcon
 							icon={ArrowReloadHorizontalIcon}
-							className="text-neutral-700 dark:text-neutral-300 "
+							className="text-neutral-700 dark:text-neutral-300"
 						/>
-						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold ">
+						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold">
 							App Updates
 						</Text>
 					</TouchableOpacity>
@@ -148,9 +146,9 @@ export default function Settings() {
 					>
 						<HugeiconsIcon
 							icon={Github01Icon}
-							className="text-neutral-700 dark:text-neutral-300 "
+							className="text-neutral-700 dark:text-neutral-300"
 						/>
-						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold ">
+						<Text className="text-neutral-700 dark:text-neutral-300 font-semibold">
 							Open Source
 						</Text>
 					</TouchableOpacity>
@@ -158,7 +156,7 @@ export default function Settings() {
 			</View>
 
 			<View className="mx-4 flex flex-col gap-2">
-				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-t-3xl rounded-b-xl p-6 ">
+				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-t-3xl rounded-b-xl p-6">
 					<View className="flex flex-row justify-between items-center">
 						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Dark Mode
@@ -166,7 +164,10 @@ export default function Settings() {
 
 						<Switch
 							value={colorScheme === "dark" ? true : false}
-							onValueChange={toggleColorScheme}
+							onValueChange={() => {
+								toggleColorScheme()
+								$vibrate()
+							}}
 							trackColor={{ false: "#ccc", true: "#4ade80" }}
 							thumbColor={colorScheme === "dark" ? "#22c55e" : "#f4f4f5"}
 							style={{ height: 32, width: 32 }}
@@ -174,7 +175,7 @@ export default function Settings() {
 					</View>
 				</TouchableOpacity>
 
-				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-xl p-6 ">
+				<TouchableOpacity className="bg-white dark:bg-neutral-900 rounded-xl p-6">
 					<View className="flex flex-row justify-between items-center">
 						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Touch Feedback
@@ -215,7 +216,7 @@ export default function Settings() {
 							}
 						])
 					}
-					className="bg-white dark:bg-neutral-900 rounded-xl p-6 "
+					className="bg-white dark:bg-neutral-900 rounded-xl p-6"
 				>
 					<View className="flex flex-row justify-between items-center">
 						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
@@ -234,7 +235,7 @@ export default function Settings() {
 					</View>
 				</TouchableOpacity>
 
-				<View className="bg-white dark:bg-neutral-900 rounded-b-3xl rounded-t-xl p-6 ">
+				<View className="bg-white dark:bg-neutral-900 rounded-b-3xl rounded-t-xl p-6">
 					{sent_message ? (
 						<View>
 							<Text className="text-neutral-500">

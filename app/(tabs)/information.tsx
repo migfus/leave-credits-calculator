@@ -365,7 +365,7 @@ for (let minutes = 59; minutes >= 1; minutes -= 1) {
 
 export default function Information() {
 	return (
-		<View className={`bg-neutral-200 dark:bg-neutral-950 flex-1`}>
+		<View className="bg-neutral-200 dark:bg-neutral-950 flex-1">
 			<ScrollView
 				className="gap-4 py-4"
 				contentContainerStyle={{ paddingBottom: 24, gap: 16 }}
@@ -391,57 +391,37 @@ export default function Information() {
 								<View
 									className={`${index === 0 ? "rounded-t-3xl" : "rounded-t-xl"} ${index === conversion_rate.length - 1 ? "rounded-b-3xl" : "rounded-b-xl"} bg-white dark:bg-neutral-900 p-6 flex flex-row gap-2 justify-between`}
 								>
-									<Text
-										className={`text-neutral-600 dark:text-neutral-300 font-semibold`}
-									>
+									<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 										{item.title}
 									</Text>
 
 									{item.csc === item.fixed ? (
 										<View className="flex flex-row gap-2">
-											<View
-												className={`bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-											>
-												<Text
-													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
-												>
+											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+												<Text className="text-orange-700 dark:text-orange-100 font-semibold text-sm">
 													{`CSC & Fixed`}
 												</Text>
-												<Text
-													className={`text-orange-700 dark:text-red-100 font-semibold text-sm`}
-												>
+												<Text className="text-orange-700 dark:text-red-100 font-semibold text-sm">
 													{`-${item.csc}`}
 												</Text>
 											</View>
 										</View>
 									) : (
 										<View className="flex flex-row gap-2">
-											<View
-												className={`bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-											>
-												<Text
-													className={`text-red-700 dark:text-red-100 font-semibold text-sm`}
-												>
+											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+												<Text className="text-red-700 dark:text-red-100 font-semibold text-sm">
 													{`CSC`}
 												</Text>
-												<Text
-													className={`text-red-700 dark:text-red-100 font-semibold text-sm`}
-												>
+												<Text className="text-red-700 dark:text-red-100 font-semibold text-sm">
 													{`-${item.csc}`}
 												</Text>
 											</View>
 
-											<View
-												className={`bg-orange-50 dark:bg-oragne-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full`}
-											>
-												<Text
-													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
-												>
+											<View className="bg-orange-50 dark:bg-yellow-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+												<Text className="text-orange-700 dark:text-orange-100 font-semibold text-sm">
 													{`Fixed`}
 												</Text>
-												<Text
-													className={`text-orange-700 dark:text-orange-100 font-semibold text-sm`}
-												>
+												<Text className="text-orange-700 dark:text-orange-100 font-semibold text-sm">
 													{`-${item.fixed}`}
 												</Text>
 											</View>
