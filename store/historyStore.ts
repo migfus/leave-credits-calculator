@@ -21,7 +21,6 @@ export const useLeaveHistory = create<LeaveHistoryState>()(
 
 			reset: () =>
 				set(() => {
-					console.log("history removed")
 					return {
 						history: []
 					}

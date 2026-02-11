@@ -177,7 +177,7 @@ export default function KeypadCard({
 		["1", "2", "3"],
 		["4", "5", "6"],
 		["7", "8", "9"],
-		["Del", "0", "."],
+		[".", "0", "Del"],
 		["+/-", "Reset", "Clear"]
 	]
 

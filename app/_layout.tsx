@@ -171,7 +171,6 @@ function IntroScreen() {
 								<TouchableOpacity
 									onPress={() => {
 										$changeMethod("CSC Leave Credits Rule")
-										console.log("changed")
 									}}
 									className="bg-white dark:bg-neutral-900 rounded-3xl p-6"
 								>
@@ -199,7 +198,6 @@ function IntroScreen() {
 								<TouchableOpacity
 									onPress={() => {
 										$changeMethod("Fixed Leave Credits Rule")
-										console.log("changed")
 									}}
 									className="bg-white dark:bg-neutral-900 rounded-3xl p-6"
 								>

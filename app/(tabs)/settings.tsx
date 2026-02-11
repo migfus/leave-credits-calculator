@@ -76,16 +76,13 @@ export default function Settings() {
 			const contentType = res.headers.get("content-type") ?? ""
 			if (contentType.includes("application/json")) {
 				const post_data = await res.json()
-				console.log("post_data", post_data)
 			} else {
 				const post_text = await res.text()
-				console.log("post_text", post_text)
 			}
 
 			setMessage("")
 			setSentMessage(true)
 		} catch (error) {
-			console.log("post_error", error)
 			Alert.alert(
 				"Unable to send",
 				"We couldn't send your message right now. Please try again."

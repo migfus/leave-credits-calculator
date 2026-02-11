@@ -8,21 +8,22 @@ export function leaveBalanceComputation(data: {
 	method: "CSC Leave Credits Rule" | "Fixed Leave Credits Rule"
 }): string[] {
 	// CONVERT 1/480
-	let computed_hours = 0
+	// let computed_hours = 0
 	let computed_mins = 0
 	if (data.method === "CSC Leave Credits Rule") {
-		computed_hours = leaveConvertionFromCSC(Number(data.hours) * 60)
-		computed_mins = leaveConvertionFromCSC(Number(data.minutes))
+		computed_mins = leaveConvertionFromCSC(
+			Number(data.hours) * 60 + Number(data.minutes)
+		)
 	} else {
-		computed_hours = leaveConvertionFromFixed(Number(data.hours) * 60)
-		computed_mins = leaveConvertionFromFixed(Number(data.minutes))
+		computed_mins = leaveConvertionFromFixed(
+			Number(data.minutes) + Number(data.hours) * 60
+		)
 	}
 
-	let cost = computed_hours + computed_mins
-	let final_balance = roundUp(Number(data.balance) - cost)
+	let final_balance = roundUp(Number(data.balance) - computed_mins)
 	// Add .000 if cost is a whole number (e.g., 2 → 2.000)
-	if (Number.isInteger(cost)) {
-		cost = Number(cost.toFixed(3))
+	if (Number.isInteger(computed_mins)) {
+		computed_mins = Number(computed_mins.toFixed(3))
 	}
 
 	if (Number.isInteger(Number(final_balance))) {
@@ -30,7 +31,7 @@ export function leaveBalanceComputation(data: {
 	}
 
 	return [
-		formatBalance(cost.toString()),
+		formatBalance(computed_mins.toString()),
 		formatBalance(final_balance.toString())
 	]
 
