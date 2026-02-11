@@ -110,7 +110,7 @@ export default function Settings() {
 
 					<View className="flex-shrink">
 						<Text className="text-brand-900 dark:text-neutral-300 text-2xl font-semibold">
-							Leave Credits Balance Calculator
+							Leave Credits Calculator
 						</Text>
 						<Text className="text-neutral-500 dark:text-neutral-400">
 							v{APP_VER}
@@ -140,7 +140,7 @@ export default function Settings() {
 						className="bg-neutral-200 dark:bg-neutral-800 flex flex-row gap-2 p-2 rounded-full px-4"
 						onPress={() =>
 							Linking.openURL(
-								"https://github.com/migfus/leave-balance-calculator"
+								"https://github.com/migfus/leave-credits-calculator"
 							)
 						}
 					>
