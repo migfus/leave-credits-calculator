@@ -147,61 +147,32 @@ export default function ResultCard({
 							className="bg-red-50 dark:bg-red-900 flex flex-row items-end justify-end gap-1 rounded-full px-5 py-2"
 							animate={{ opacity: new_balance[0] === "0.000" ? 0.5 : 1 }}
 						>
-							<View className="flex flex-row items-end">
-								<View className="text-brand-700 dark:text-brand-100 text-right text-4xl font-bold flex flex-row overflow-auto gap-0">
+							<View className="flex flex-row items-end gap-1">
+								<View className="text-brand-700 dark:text-brand-100 text-right text-4xl font-bold flex flex-row overflow-auto gap-0 items-center">
 									<Text
 										style={{
 											fontSize: fontSize,
 											lineHeight: fontSize,
 											fontVariant: ["tabular-nums"]
 										}}
-										className="font-bold text-red-900 dark:text-red-100"
+										className="font-bold text-red-900 dark:text-red-100 text-lg"
 									>
 										{`-`}
 									</Text>
-									{splitted_cost_balance.map((num, idx) => {
-										return (
-											<TickerList
-												key={`n${num}-i${idx}`}
-												index={idx}
-												number={parseInt(num)}
-												fontSize={20}
-												number_offset={1.18}
-												className="text-red-900 dark:text-red-100"
-											/>
-										)
-									})}
-									<Text
-										style={{
-											fontSize: fontSize,
-											lineHeight: fontSize,
-											fontVariant: ["tabular-nums"]
-										}}
-										className="font-bold text-red-900 dark:text-red-100"
-									>
-										{`.`}
+									<Text className="font-bold text-red-900 dark:text-red-100 text-lg">
+										{new_balance[0].split(".")[0]}
+									</Text>
+									<Text className="font-bold text-red-900 dark:text-red-100 text-lg">
+										.
+									</Text>
+									<Text className="font-bold text-red-900 dark:text-red-100 mt-1">
+										{new_balance[0].split(".")[1]}
 									</Text>
 								</View>
-								<View className="text-brand-700 dark:text-brand-100 text-right text-4xl font-bold flex flex-row overflow-auto">
-									{splitted_cost_balance_decimal.map((num, idx) => {
-										return (
-											<TickerList
-												key={`n${num}-i${idx}`}
-												index={idx}
-												number={parseInt(num)}
-												fontSize={16}
-												number_offset={1.23}
-												display_offset={1.1}
-												className="text-red-900 dark:text-red-100 "
-											/>
-										)
-									})}
-								</View>
+								<Text className="text-xs text-green-900 dark:text-green-100">
+									{`cost bal`}
+								</Text>
 							</View>
-
-							<Text className="text-xs text-green-900 dark:text-green-100">
-								{`cost bal`}
-							</Text>
 						</MotiView>
 					</View>
 				</View>

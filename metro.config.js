@@ -1,12 +1,43 @@
+const path = require("path")
 const { getDefaultConfig } = require("expo/metro-config")
 const { withNativeWind } = require("nativewind/metro")
+const {
+	wrapWithReanimatedMetroConfig
+} = require("react-native-reanimated/metro-config")
 
-const config = getDefaultConfig(__dirname)
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname, { isCSSEnabled: true })
 
-// Expo web bundles run as a classic script (not an ES module). Some libraries
-// (e.g. zustand) ship ESM builds that contain `import.meta`, which will crash
-// at runtime if Metro selects them. Disabling package exports makes Metro fall
-// back to the CommonJS entrypoints.
+// 1. Add support for additional file extensions
+// (Required for libraries like Moti and Framer Motion)
+config.resolver.sourceExts.push("cjs", "mjs")
+
+// 2. The "Moti Fix": Resolve tslib/__extends undefined error
+// This forces Metro to resolve all tslib calls to a single, stable source file.
 config.resolver.unstable_enablePackageExports = false
 
-module.exports = withNativeWind(config, { input: "./app/global.css" })
+const originalResolveRequest = config.resolver.resolveRequest
+
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+	if (moduleName === "tslib" || moduleName.endsWith("/tslib")) {
+		return {
+			filePath: path.resolve(__dirname, "node_modules/tslib/tslib.js"),
+			type: "sourceFile"
+		}
+	}
+
+	if (originalResolveRequest) {
+		return originalResolveRequest(context, moduleName, platform)
+	}
+
+	return context.resolveRequest(context, moduleName, platform)
+}
+
+// 3. Chain the configurations correctly
+// We wrap the base config with Reanimated first
+const reanimatedConfig = wrapWithReanimatedMetroConfig(config)
+
+// Then wrap that result with NativeWind and export it
+module.exports = withNativeWind(reanimatedConfig, {
+	input: "./app/global.css"
+})
