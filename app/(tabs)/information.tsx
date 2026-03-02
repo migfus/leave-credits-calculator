@@ -397,7 +397,7 @@ export default function Information() {
 
 									{item.csc === item.fixed ? (
 										<View className="flex flex-row gap-2">
-											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2 px-3 py-1 rounded-full">
 												<Text className="text-orange-700 dark:text-orange-100 font-semibold text-sm">
 													{`CSC & Fixed`}
 												</Text>
@@ -408,7 +408,7 @@ export default function Information() {
 										</View>
 									) : (
 										<View className="flex flex-row gap-2">
-											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+											<View className="bg-red-50 dark:bg-red-800 items-center flex flex-row gap-2 px-3 py-1 rounded-full">
 												<Text className="text-red-700 dark:text-red-100 font-semibold text-sm">
 													{`CSC`}
 												</Text>
@@ -417,7 +417,7 @@ export default function Information() {
 												</Text>
 											</View>
 
-											<View className="bg-orange-50 dark:bg-yellow-800 items-center flex flex-row gap-2  px-3 py-1 rounded-full">
+											<View className="bg-orange-50 dark:bg-yellow-800 items-center flex flex-row gap-2 px-3 py-1 rounded-full">
 												<Text className="text-orange-700 dark:text-orange-100 font-semibold text-sm">
 													{`Fixed`}
 												</Text>

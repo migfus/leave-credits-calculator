@@ -215,7 +215,7 @@ export default function Settings() {
 					}
 					className="bg-white dark:bg-neutral-900 rounded-xl p-6"
 				>
-					<View className="flex flex-row justify-between items-center">
+					<View className="flex flex-col min-[400px]:flex-row justify-between min-[400px]:items-center gap-2">
 						<Text className="text-neutral-600 dark:text-neutral-300 font-semibold">
 							Computation Mode
 						</Text>

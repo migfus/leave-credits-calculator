@@ -132,7 +132,7 @@ _Install the following repo by following the instruction. If there's any issue u
 
 ## Usage
 
-For the documentation, it will be added on version 1.2.1
+For the documentation, it will be added at version 1.3.x. (I will fix some bugs)
 
 <!-- For more information please navigate to [Documentation](https://example.com). -->
 
@@ -190,12 +190,13 @@ Projects: [https://migfus.site/](https://migfus.site/)
 
 Thanks for the libraries to make things easier. 💖🫰
 
-- [React Icons](https://hugeicons.com/)
-- [Electron](https://www.electronjs.org/)
-- [Zustand](https://zustand-demo.pmnd.rs/)
-- [Nativewind](https://www.nativewind.dev/)
-- [Moment](https://momentjs.com/)
-- [@gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-sheet)
+- [HugeIcons](https://hugeicons.com/) - free tier icons 🫰
+- [Electron](https://www.electronjs.org/) - web to windows app conversion
+- [Zustand](https://zustand-demo.pmnd.rs/) - state management
+- [Nativewind](https://www.nativewind.dev/) - UI
+- [Moment](https://momentjs.com/) - date convertion
+- [@gorhom/bottom-sheet](https://github.com/gorhom/react-native-bottom-sheet) - nice mobile modal
+- [Moti](https://moti.fyi/) - animation and caused some chaos (bugs) 😅
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

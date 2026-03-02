@@ -164,8 +164,8 @@ const HistoryCard = ({
 								</Text>
 
 								<View className="flex flex-col gap-2">
-									<View className="flex flex-row items-end justify-end gap-1">
-										<View className="flex flex-row items-end gap-1 justify-end">
+									<View className="flex flex-row items-start justify-end gap-1">
+										<View className="flex flex-row items-start gap-1 justify-end ">
 											<Text
 												numberOfLines={1}
 												className="text-neutral-800 dark:text-neutral-400 text-md font-semibold"
@@ -223,15 +223,13 @@ const HistoryCard = ({
 										</View>
 									</View>
 
-									<View className="flex flex-row justify-end gap-2 items-center">
-										<Text
-											numberOfLines={1}
-											className="bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 text-xl font-semibold rounded-full px-4 py-1"
-										>{`-${computed[0]} `}</Text>
-										<Text
-											numberOfLines={1}
-											className="bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-50 text-2xl font-semibold rounded-full px-4 py-1"
-										>{`${computed[1]} `}</Text>
+									<View className="flex flex-row flex-wrap gap-2 items-center">
+										<Text className="bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-100 text-xl font-semibold rounded-2xl px-4 py-1">
+											{`-${computed[0]} `}
+										</Text>
+										<Text className="bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-50 text-2xl font-semibold rounded-2xl px-4 py-1">
+											{`${computed[1]} `}
+										</Text>
 									</View>
 								</View>
 							</TouchableOpacity>
